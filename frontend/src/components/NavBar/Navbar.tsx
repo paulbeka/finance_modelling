@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import styles from './navbar.module.css';
 
 
 const NavBar = () => {
@@ -10,14 +11,18 @@ const NavBar = () => {
   ]
 
   return (
-    <div className="nav-container">
-      <div className="logo-container"></div>
-      <div className="link-container">
-        {options.map(navItem => (
-          <Link to={navItem.link} className="nav-item-container">
-            {navItem.name}
-          </Link>
-        ))}
+    <div className={styles["nav-container"]}>
+      <div className={styles["nav-content"]}>
+        <Link to="/" className={styles["logo-container"]}>
+          <img src="/favicon.ico" alt="Logo" className={styles["logo-image"]} />
+        </Link>
+        <div className={styles["link-container"]}>
+          {options.map(navItem => (
+            <Link to={navItem.link} className={styles["nav-item-container"]} key={navItem.name}>
+              {navItem.name}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )

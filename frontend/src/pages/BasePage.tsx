@@ -8,7 +8,7 @@ const BasePage = () => {
 
   return (
     <div className="base-container">
-      {!isMobile && <NavBar />}
+      {!isMobile && <><div style={{height: "60px"}}/><NavBar /></>}
       <Outlet />
     </div>
   )  

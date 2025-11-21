@@ -1,0 +1,38 @@
+import { OptionType } from './calc/black_scholes';
+import { blackScholesGreeks } from './calc/black_scholes';
+import styles from './CSS/OptionGreeks.module.css';
+
+const OptionGreeks = (
+  props: {
+    spot: number;
+    strike: number;
+    time: number;
+    rate: number;
+    volatility: number;
+    optionType: OptionType;
+    dividend: number;
+  }
+) => {
+
+  const { delta, gamma, theta, vega, rho} = blackScholesGreeks(
+    props.spot,
+    props.strike,
+    props.time,
+    props.rate,
+    props.volatility,
+    props.optionType,
+    props.dividend
+  );
+
+  return (
+    <div className={styles["option-greeks-container"]}>
+      <div className={styles["option-greek-container"]}>Delta: {delta.toFixed(2)}</div>
+      <div className={styles["option-greek-container"]}>Gamma: {gamma.toFixed(2)}</div>
+      <div className={styles["option-greek-container"]}>Theta: {theta.toFixed(2)}</div>
+      <div className={styles["option-greek-container"]}>Vega: {vega.toFixed(2)}</div>
+      <div className={styles["option-greek-container"]}>Rho: {rho.toFixed(2)}</div>
+    </div>
+  )
+}
+
+export default OptionGreeks;

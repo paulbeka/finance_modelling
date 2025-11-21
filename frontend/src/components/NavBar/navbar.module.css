@@ -1,0 +1,44 @@
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  background-color: white;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  display: flex;
+  max-width: 1200px;
+  height: 60px;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.logo-container {
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.logo-image {
+  margin-top: 6px;
+  height: 35px;
+}
+
+.link-container {
+  display: flex;
+  gap: 15px;
+  margin-right: 20px;
+}
+
+.nav-item-container {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+.nav-item-container:hover {
+  color: #003a78;
+}

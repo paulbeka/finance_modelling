@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
-import { blackScholesSimulation, OptionType } from '../../simulations/black_scholes';
+import { useState } from 'react';
+import { blackScholesSimulation, OptionType } from './calc/black_scholes';
 import Slider from '@mui/material/Slider';
-import '../projects/CSS/Project.css';
+import styles from './CSS/BlackScholes.module.css';
+import OptionGreeks from './OptionGreeks';
 
 
 const VariableSlider = (props: any) => {
   return (
-    <div className="variable-container">
-      <label className="variable-label">{props.label}</label>
+    <div className={styles["variable-container"]}>
+      <label className={styles["variable-label"]}>{props.label}</label>
       <Slider
         size="small"
         value={props.value}
@@ -23,7 +24,7 @@ const VariableSlider = (props: any) => {
         value={props.value}
         step={props.step}
         onChange={(e) => props.setValue(Number(e.target.value))}
-        className="input-field"
+        className={styles["input-field"]}
       />
     </div>
   )
@@ -50,23 +51,23 @@ const BlackScholesModule = () => {
   );
 
   return (
-    <div className="black-scholes-module-container">
+    <div className={styles["black-scholes-module-container"]}>
       <h3>Black-Scholes Calculator</h3>
 
-      <div className="variable-container">
-        <label className="variable-label">Option Type</label>
+      <div className={styles["variable-container"]}>
+        <label className={styles["variable-label"]}>Option Type</label>
         <select
           value={optionType}
           onChange={(e) => setOptionType(e.target.value as OptionType)}
-          className="input-field"
+          className={styles["input-field"]}
         >
           <option value="call">Call</option>
           <option value="put">Put</option>
         </select>
       </div>
 
-      <div className="variable-container">
-        <label className="variable-label">Dividend Yield (q)</label>
+      <div className={styles["variable-container"]}>
+        <label className={styles["variable-label"]}>Dividend Yield (q)</label>
         <Slider
           size="small"
           value={dividend}
@@ -82,7 +83,7 @@ const BlackScholesModule = () => {
           value={dividend}
           step="0.001"
           onChange={(e) => setDividend(Number(e.target.value))}
-          className="input-field"
+          className={styles["input-field"]}
         />
       </div>
 
@@ -129,9 +130,21 @@ const BlackScholesModule = () => {
         setValue={setVolatility}
       />
 
-      <h4 style={{ marginTop: '30px' }}>
-        Option Price: <span style={{ fontSize: '1rem' }}>$ {price.toFixed(2)}</span>
-      </h4>
+      <div className={styles["option-price-container"]}>
+        <p>
+          Option Price: ${price.toFixed(2)}
+        </p>
+      </div>
+
+      <OptionGreeks
+        spot={spot}
+        strike={strike}
+        time={time}
+        rate={rate}
+        volatility={volatility}
+        optionType={optionType}
+        dividend={dividend}
+      />
     </div>
   );
 };
