@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import NavBar from "../components/Navbar";
+import NavBar from "../components/NavBar/Navbar";
 import "./CSS/base.css";
 
 
@@ -8,7 +8,7 @@ const BasePage = () => {
 
   return (
     <div className="base-container">
-      {isMobile && <NavBar />}
+      {!isMobile && <NavBar />}
       <Outlet />
     </div>
   )  
