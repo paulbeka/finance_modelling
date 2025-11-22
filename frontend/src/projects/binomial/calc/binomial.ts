@@ -57,7 +57,7 @@ const getLatticeParameters = (
       d = Math.exp((r - 0.5 * sigma ** 2) * dt - (sigma * Math.sqrt(dt)));
       p = 0.5;
       break;
-    case "TIAN":
+    case "TIAN":  // TODO: fix this implementation
       const a = Math.exp(r * dt);
       const b = Math.exp(sigma * Math.sqrt(dt));
       u = 0.5 * a * b * (b + 1 + Math.sqrt(b * b + 2 * b - 3));

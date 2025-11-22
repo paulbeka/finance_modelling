@@ -1,4 +1,4 @@
-import { OptionType } from '../util/common_types.types';
+import { OptionType } from './common_types.types';
 import styles from './CSS/input.module.css';
 
 const OptionTypeSelector = (props: { optionType: string, setOptionType: (type: OptionType) => void }) => {

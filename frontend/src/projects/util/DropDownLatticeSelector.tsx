@@ -1,10 +1,10 @@
-import { BINOMIAL_LATTICE_TYPES, BinomialLatticeType } from '../util/common_types.types';
+import { BINOMIAL_LATTICE_TYPES, BinomialLatticeType } from './common_types.types';
 import styles from './CSS/input.module.css';
 
 const OptionTypeSelector = (props: { latticeType: string, setLatticeType: (type: BinomialLatticeType) => void }) => {
   return (
   <div className={styles["variable-container"]}>
-    <label className={styles["variable-label"]}>Option Type</label>
+    <label className={styles["variable-label"]}>Lattice Type</label>
     <select
       value={props.latticeType}
       onChange={(e) => props.setLatticeType(e.target.value as BinomialLatticeType)}

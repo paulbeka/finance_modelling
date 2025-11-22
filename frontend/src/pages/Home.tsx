@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import BlackScholesModule from "../components/projects/blackscholes/BlackScholes";
-import BinomialModule from "../components/projects/binomial/BinomialModel";
+import BlackScholesModule from "../projects/blackscholes/BlackScholes";
+import BinomialModule from "../projects/binomial/BinomialModel";
 import style from "./CSS/home.module.css";
 
 const ExpandPanel = ({ isOpen, children }: any) => {
