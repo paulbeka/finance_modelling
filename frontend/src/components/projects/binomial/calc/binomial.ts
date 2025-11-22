@@ -8,13 +8,11 @@ const calculateBinomial = (
   sigma: number,
   steps: number,
   optionType: OptionType,
-  // latticeType?: BinomialLatticeType = "LR"
+  latticeType: BinomialLatticeType = "CRR"
 ): number => {
   const dt = T / steps;
 
-  const u = Math.exp(sigma * Math.sqrt(dt));
-  const d = 1 / u;
-  const p = (Math.exp(r * dt) - d) / (u - d);
+  const {u, d, p} = getLatticeParameters(dt, r, sigma, latticeType);
   const discountFactor = Math.exp(-r * dt);
 
   const assetPrices = new Float64Array(steps + 1);
@@ -52,32 +50,31 @@ const getLatticeParameters = (
     case "CRR":
       u = Math.exp(sigma * Math.sqrt(dt));
       d = 1 / u;
+      p = (Math.exp(r * dt) - d) / (u - d);
       break;
     case "JR":
-      u = Math.exp((r - 0.5 * sigma * sigma) * dt + sigma * Math.sqrt(dt));
-      d = Math.exp((r - 0.5 * sigma * sigma) * dt - sigma * Math.sqrt(dt));
-      break;
-    case "EQP":
-      u = Math.exp(sigma * Math.sqrt(3 * dt));
-      d = 1 / u;
+      u = Math.exp((r - 0.5 * sigma ** 2) * dt + (sigma * Math.sqrt(dt)));
+      d = Math.exp((r - 0.5 * sigma ** 2) * dt - (sigma * Math.sqrt(dt)));
+      p = 0.5;
       break;
     case "TIAN":
       const a = Math.exp(r * dt);
       const b = Math.exp(sigma * Math.sqrt(dt));
       u = 0.5 * a * b * (b + 1 + Math.sqrt(b * b + 2 * b - 3));
       d = 0.5 * a * b * (b + 1 - Math.sqrt(b * b + 2 * b - 3));
+      p = (a - d) / (u - d);
       break;  
     case "TRG":
       u = Math.exp(sigma * Math.sqrt(dt) + (r - 0.5 * sigma * sigma) * dt);
       d = Math.exp(-sigma * Math.sqrt(dt) + (r - 0.5 * sigma * sigma) * dt);
+      p = 0.5;
       break;
-    case "LR":
     default:
       u = Math.exp(sigma * Math.sqrt(dt));
       d = 1 / u;
+      p = (Math.exp(r * dt) - d) / (u - d);
       break;
   }
-  p = (Math.exp(r * dt) - d) / (u - d);
   return { u, d, p };
 }
 

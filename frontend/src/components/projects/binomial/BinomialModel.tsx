@@ -1,9 +1,11 @@
 import { useState } from "react";
 import styles from "./CSS/BinomialModel.module.css";
-import { OptionType } from "../util/common_types.types";
+import { BinomialLatticeType, OptionType } from "../util/common_types.types";
 import OptionTypeSelector from "../util/OptionTypeSelector";
 import VariableSlider from "../util/VariableSlider";
+import DropDownLatticeSelector from "../util/DropDownLatticeSelector";
 import calculateBinomial from "./calc/binomial";
+import { blackScholesSimulation } from "../blackscholes/calc/black_scholes";
 
 const BinomialModule = () => {
   const [steps, setSteps] = useState<number>(10);
@@ -13,7 +15,7 @@ const BinomialModule = () => {
   const [rate, setRate] = useState(0.05);
   const [volatility, setVolatility] = useState(0.2);
   const [optionType, setOptionType] = useState<OptionType>("call");
-
+  const [latticeType, setLatticeType] = useState<BinomialLatticeType>("CRR");
 
   const binomialEstimation = calculateBinomial(
     spot,
@@ -22,16 +24,31 @@ const BinomialModule = () => {
     rate,
     volatility,
     steps,
-    optionType
+    optionType,
+    latticeType
   ); 
+
+  const blackScholesPrice = blackScholesSimulation(
+    spot,
+    strike,
+    time,
+    rate,
+    volatility,
+    optionType
+  );
 
   return (
     <div className={styles["binomial-module-container"]}>
-      <h3>Binomial Model Calculator</h3>
+      <h3>Binomial Model Calculator (Slow)</h3>
       
       <OptionTypeSelector
         optionType={optionType}
         setOptionType={setOptionType}
+      />
+
+      <DropDownLatticeSelector 
+        latticeType={latticeType}
+        setLatticeType={setLatticeType}
       />
 
       <VariableSlider
@@ -89,9 +106,24 @@ const BinomialModule = () => {
       />
 
       <div className={styles["option-price-container"]}>
-        <p>
-          Option Price: ${binomialEstimation.toFixed(2)}
-        </p>
+        <div className={styles["option-price-item"]}>
+          <p style={{ marginTop: "5px" }}>Binomial Price Estimation:</p> 
+          <div className={styles["option-price-item-price"]}>
+            ${binomialEstimation.toFixed(2)}
+          </div>
+        </div>
+        <div className={styles["option-price-item"]}>
+          <p style={{ marginTop: "5px" }}>Black Scholes Price:</p>
+          <div className={styles["option-price-item-price"]}>
+            ${blackScholesPrice.toFixed(2)}
+          </div>
+        </div>
+        <div className={styles["option-price-item"]}>
+          <p style={{ marginTop: "5px" }}>Difference:</p> 
+          <div className={styles["option-price-item-price"]}>
+            ${(Math.abs(binomialEstimation - blackScholesPrice)).toFixed(4)}
+          </div>
+        </div>
       </div>
 
     </div>

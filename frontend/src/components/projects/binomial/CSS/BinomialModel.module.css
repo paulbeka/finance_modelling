@@ -4,3 +4,23 @@
   max-width: 800px;
   margin: 20px auto;
 }
+
+.option-price-container {
+  display: flex;
+  gap: 20px;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.option-price-item {
+  text-align: center;
+  font-weight: bold;
+  width: 33%;
+}
+
+.option-price-item-price {
+  background: rgb(200, 220, 240);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+}

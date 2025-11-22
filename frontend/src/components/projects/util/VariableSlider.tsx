@@ -1,4 +1,4 @@
-import styles from './CSS/VariableSlider.module.css';
+import styles from './CSS/input.module.css';
 import Slider from '@mui/material/Slider';
 
 const VariableSlider = (props: any) => {

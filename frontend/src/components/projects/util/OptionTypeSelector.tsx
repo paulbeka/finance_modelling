@@ -1,5 +1,5 @@
 import { OptionType } from '../util/common_types.types';
-import styles from './CSS/VariableSlider.module.css';
+import styles from './CSS/input.module.css';
 
 const OptionTypeSelector = (props: { optionType: string, setOptionType: (type: OptionType) => void }) => {
   return (
