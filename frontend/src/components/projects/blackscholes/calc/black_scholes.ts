@@ -1,6 +1,5 @@
 import { erf } from 'mathjs';
-
-export type OptionType = "call" | "put";
+import { OptionType } from "../../util/common_types.types";
 
 export const blackScholesSimulation = (
   S: number,

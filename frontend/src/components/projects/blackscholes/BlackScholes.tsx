@@ -1,35 +1,10 @@
 import { useState } from 'react';
-import { blackScholesSimulation, OptionType } from './calc/black_scholes';
-import Slider from '@mui/material/Slider';
+import { OptionType } from '../util/common_types.types';
+import { blackScholesSimulation } from './calc/black_scholes';
 import styles from './CSS/BlackScholes.module.css';
 import OptionGreeks from './OptionGreeks';
-
-
-const VariableSlider = (props: any) => {
-  return (
-    <div className={styles["variable-container"]}>
-      <label className={styles["variable-label"]}>{props.label}</label>
-      <Slider
-        size="small"
-        value={props.value}
-        min={props.min}
-        max={props.max}
-        step={props.step}
-        onChange={(_, value) => props.setValue(value as number)}
-        valueLabelDisplay="auto"
-        style={{ flex: 1 }}
-      />
-      <input
-        type="number"
-        value={props.value}
-        step={props.step}
-        onChange={(e) => props.setValue(Number(e.target.value))}
-        className={styles["input-field"]}
-      />
-    </div>
-  )
-};
-
+import VariableSlider from '../util/VariableSlider';
+import OptionTypeSelector from '../util/OptionTypeSelector';
 
 const BlackScholesModule = () => {
   const [spot, setSpot] = useState(100);
@@ -37,7 +12,7 @@ const BlackScholesModule = () => {
   const [time, setTime] = useState(1);
   const [rate, setRate] = useState(0.05);
   const [volatility, setVolatility] = useState(0.2);
-  const [optionType, setOptionType] = useState<"call" | "put">("call");
+  const [optionType, setOptionType] = useState<OptionType>("call");
   const [dividend, setDividend] = useState(0);
 
   const price = blackScholesSimulation(
@@ -54,38 +29,19 @@ const BlackScholesModule = () => {
     <div className={styles["black-scholes-module-container"]}>
       <h3>Black-Scholes Calculator</h3>
 
-      <div className={styles["variable-container"]}>
-        <label className={styles["variable-label"]}>Option Type</label>
-        <select
-          value={optionType}
-          onChange={(e) => setOptionType(e.target.value as OptionType)}
-          className={styles["input-field"]}
-        >
-          <option value="call">Call</option>
-          <option value="put">Put</option>
-        </select>
-      </div>
+      <OptionTypeSelector 
+        optionType={optionType}
+        setOptionType={setOptionType}
+      />
 
-      <div className={styles["variable-container"]}>
-        <label className={styles["variable-label"]}>Dividend Yield (q)</label>
-        <Slider
-          size="small"
-          value={dividend}
-          min={0}
-          max={0.2}
-          step={0.001}
-          onChange={(_, value) => setDividend(value as number)}
-          valueLabelDisplay="auto"
-          style={{ flex: 1 }}
-        />
-        <input
-          type="number"
-          value={dividend}
-          step="0.001"
-          onChange={(e) => setDividend(Number(e.target.value))}
-          className={styles["input-field"]}
-        />
-      </div>
+      <VariableSlider 
+        label="Dividend Yield (q)"
+        value={dividend}
+        min={0}
+        max={0.2}
+        step={0.001}
+        setValue={setDividend}
+      />
 
       <VariableSlider 
         label="Spot Price"

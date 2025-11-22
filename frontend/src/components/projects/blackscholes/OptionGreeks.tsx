@@ -1,4 +1,4 @@
-import { OptionType } from './calc/black_scholes';
+import { OptionType } from '../util/common_types.types';
 import { blackScholesGreeks } from './calc/black_scholes';
 import styles from './CSS/OptionGreeks.module.css';
 
@@ -27,7 +27,7 @@ const OptionGreeks = (
   return (
     <div className={styles["option-greeks-container"]}>
       <div className={styles["option-greek-container"]}>Delta: {delta.toFixed(2)}</div>
-      <div className={styles["option-greek-container"]}>Gamma: {gamma.toFixed(2)}</div>
+      <div className={styles["option-greek-container"]}>Gamma: {gamma.toFixed(4)}</div>
       <div className={styles["option-greek-container"]}>Theta: {theta.toFixed(2)}</div>
       <div className={styles["option-greek-container"]}>Vega: {vega.toFixed(2)}</div>
       <div className={styles["option-greek-container"]}>Rho: {rho.toFixed(2)}</div>
