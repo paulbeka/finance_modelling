@@ -51,7 +51,7 @@ const Home = () => {
   ];
 
   const largerProjects = [
-    { name: "Monte-Carlo Porfolio Simulator", 
+    { name: "Monte-Carlo Option Price Simulation", 
       desc: "", 
       link: "/monte-carlo" 
     }
