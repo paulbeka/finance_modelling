@@ -23,7 +23,7 @@ const ExpandPanel = ({ isOpen, children }: any) => {
       ref={ref}
       className={style.expandPanel}
     >
-      {children}
+      {isOpen && children}
     </div>
   );
 };
@@ -69,7 +69,7 @@ const Home = () => {
             </div>
 
             <ExpandPanel isOpen={openProject === proj.name}>
-              <div className={style.arrow}></div>
+              {openProject === proj.name && <div className={style.arrow}></div>}
               <div className={style.expandContent}>{proj.component}</div>
             </ExpandPanel>
           </div>
