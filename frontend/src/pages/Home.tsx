@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import BlackScholesModule from "../projects/blackscholes/BlackScholes";
 import BinomialModule from "../projects/binomial/BinomialModel";
 import style from "./CSS/home.module.css";
+import FixedIncomeYieldSolver from "../projects/fi_yield_solver/FixedIncomeYieldSolver";
 
 const ExpandPanel = ({ isOpen, children }: any) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -41,6 +42,11 @@ const Home = () => {
       desc: "Binomial pricing model for pricing assets.",
       component: <BinomialModule />,
     },
+    {
+      name: "Fixed-Income Yield Solver",
+      desc: "Calculate yield to maturity for fixed-income securities.",
+      component: <FixedIncomeYieldSolver />,
+    }
   ];
 
   const toggle = (name: string | null) => {
