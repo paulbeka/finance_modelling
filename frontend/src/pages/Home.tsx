@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import BlackScholesModule from "../projects/blackscholes/BlackScholes";
-import BinomialModule from "../projects/binomial/BinomialModel";
+import { Link } from "react-router-dom";
+import BlackScholesModule from "../mini_projects/blackscholes/BlackScholes";
+import BinomialModule from "../mini_projects/binomial/BinomialModel";
 import style from "./CSS/home.module.css";
-import FixedIncomeYieldSolver from "../projects/fi_yield_solver/FixedIncomeYieldSolver";
+import FixedIncomeYieldSolver from "../mini_projects/fi_yield_solver/FixedIncomeYieldSolver";
 
 const ExpandPanel = ({ isOpen, children }: any) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -31,7 +32,7 @@ const ExpandPanel = ({ isOpen, children }: any) => {
 const Home = () => {
   const [openProject, setOpenProject] = useState<string | null>(null);
 
-  const projects = [
+  const miniProjects = [
     {
       name: "Black Scholes",
       desc: "Options pricing using the Black-Scholes–Merton model.",
@@ -49,16 +50,23 @@ const Home = () => {
     }
   ];
 
+  const largerProjects = [
+    { name: "Monte-Carlo Porfolio Simulator", 
+      desc: "", 
+      link: "/monte-carlo" 
+    }
+  ];
+
   const toggle = (name: string | null) => {
     setOpenProject((prev) => (prev === name ? null : name));
   };
 
   return (
     <div>
-      <h2>Projects</h2>
+      <h2>Mini Calculators</h2>
 
       <div className={style.projectList}>
-        {projects.map((proj) => (
+        {miniProjects.map((proj) => (
           <div key={proj.name} className={style.projectWrapper}>
             <div
               className={style.projectCard}
@@ -69,11 +77,23 @@ const Home = () => {
             </div>
 
             <ExpandPanel isOpen={openProject === proj.name}>
-              {openProject === proj.name && <div className={style.arrow}></div>}
               <div className={style.expandContent}>{proj.component}</div>
             </ExpandPanel>
           </div>
         ))}
+      </div>
+
+      <h2>Larger Projects</h2>
+      <div className={style.projectList}>
+        {largerProjects.map((proj) => (
+          <div key={proj.name} className={style.projectWrapper}>
+            <Link to={`project/${proj.link}`} className={style.projectCard}>
+              <h5>{proj.name}</h5>
+              <p>{proj.desc}</p>
+            </Link>
+          </div>
+        ))}
+
       </div>
     </div>
   );

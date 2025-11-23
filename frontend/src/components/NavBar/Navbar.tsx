@@ -6,8 +6,7 @@ const NavBar = () => {
   
   const options = [
     { name: "Home", link: "/" },
-    { name: "About", link: "/about" },
-    { name: "Project", link: "/project" }
+    { name: "About", link: "/about" }
   ]
 
   return (

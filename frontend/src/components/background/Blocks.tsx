@@ -7,7 +7,7 @@ export default function ParallaxBlocks() {
   useEffect(() => {
     const onScroll = () => {
       if (!bgRef.current) return;
-      const offset = window.scrollY * 0.12;
+      const offset = window.scrollY * 0.06;
       bgRef.current.style.transform = `translateY(${-offset}px)`;
     };
     window.addEventListener("scroll", onScroll);
