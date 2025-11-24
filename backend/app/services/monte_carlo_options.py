@@ -33,7 +33,7 @@ def monte_carlo_options_simulator(
   if return_paths:
     selected_paths = paths[np.random.choice(simulations, size=min(N_RET_PATHS, simulations), replace=False)]
     return {"options_price": options_price, "paths": selected_paths.tolist()}
-  pass
+  return {"opt"}
 
 
 def monte_carlo_portfolio_options_simulator(
