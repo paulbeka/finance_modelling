@@ -1,0 +1,21 @@
+from fastapi import APIRouter
+from ...schemas.monte_carlo_option_schema import MonteCarloOptionInput, MonteCarloOptionOutput
+from ...services.monte_carlo_options import monte_carlo_options_simulator
+
+router = APIRouter()
+
+@router.post("/monte-carlo-option", response_model=MonteCarloOptionOutput)
+def simulate(req: MonteCarloOptionInput):
+    simulation_output = monte_carlo_options_simulator(
+        S=req.spot,
+        K=req.strike,
+        T=req.T,
+        r=req.r,
+        sigma=req.sigma,
+        simulations=req.num_simulations,
+        steps=req.num_steps,
+        option_type=req.option_type,
+        option_style=req.option_style
+        return_paths=req.return_paths,
+    )
+    return MonteCarloOptionOutput(**simulation_output)
