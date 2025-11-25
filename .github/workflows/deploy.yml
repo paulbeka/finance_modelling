@@ -1,0 +1,32 @@
+name: Deploy to DigitalOcean
+
+
+on:
+  push:
+    branches:
+      - main
+
+      
+jobs:
+  deploy-to-digital-ocean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.DO_DEPLOY_KEY }}
+
+      - name: Add DigitalOcean server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.DO_DEPLOY_KEY }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          ssh root@${{ secrets.DO_HOST }} << 'EOF'
+            cd /var/www/finance_modelling
+            git pull origin main
+            docker compose pull
+            docker compose up -d --build
+            docker system prune -f
+          EOF
