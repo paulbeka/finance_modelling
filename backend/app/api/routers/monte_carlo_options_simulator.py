@@ -4,8 +4,8 @@ from ...services.monte_carlo_options import monte_carlo_options_simulator
 
 router = APIRouter()
 
-@router.post("/monte-carlo-option", response_model=MonteCarloOptionOutput)
-def simulate(req: MonteCarloOptionInput):
+@router.post("/single-option", response_model=MonteCarloOptionOutput)
+def simulate_options(req: MonteCarloOptionInput):
     simulation_output = monte_carlo_options_simulator(
         S=req.spot,
         K=req.strike,
@@ -15,7 +15,7 @@ def simulate(req: MonteCarloOptionInput):
         simulations=req.num_simulations,
         steps=req.num_steps,
         option_type=req.option_type,
-        option_style=req.option_style
-        return_paths=req.return_paths,
+        option_style=req.option_style,
+        return_paths=req.return_paths
     )
     return MonteCarloOptionOutput(**simulation_output)

@@ -21,10 +21,10 @@ const MonteCarloOptions = () => {
   const [optionStyle, setOptionStyle] = useState<OptionStyle>("european");
   const [dividend, setDividend] = useState(0);
 
-  const [results, setResults] = useState<SimulationResult | null>(null);
+  const [result, setResult] = useState<SimulationResult | null>(null);
 
   const runSimulation = () => {
-    api.post("/monte-carlo/simulate", {
+    api.post("/monte-carlo-options/single-option", {
       numSimulations,
       numSteps,
       spot,
@@ -36,7 +36,7 @@ const MonteCarloOptions = () => {
       optionStyle,
       dividend
     }).then(response => {
-      setResults(response.data as SimulationResult);
+      setResult(response.data as SimulationResult);
     }).catch(error => {
       console.error("Error running simulation:", error);
     });
@@ -133,6 +133,10 @@ const MonteCarloOptions = () => {
       <button onClick={() => runSimulation()}>
         Run Simulation
       </button>
+
+      <div>
+        Option Price: ${result?.optionPrice}
+      </div>
 
     </div>
   )
