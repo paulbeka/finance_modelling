@@ -6,41 +6,50 @@ import { OptionStyle, OptionType } from "../mini_projects/util/common_types.type
 import { api } from "../api/Api";
 import styles from "./CSS/monte_carlo.module.css";
 import { SimulationResult } from "./SimulationResult.types";
+import { blackScholesSimulation } from "../mini_projects/blackscholes/calc/black_scholes";
+import { LineChart } from "@mui/x-charts/LineChart";
+import { Switch } from "@mui/material";
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 const MonteCarloOptions = () => {
-  const [numSimulations, setNumSimulations] = useState(1000);
-  const [numSteps, setNumSteps] = useState(100);
+  const [num_simulations, setNumSimulations] = useState(1000);
+  const [num_steps, setNumSteps] = useState(100);
 
   const [spot, setSpot] = useState(100);
   const [strike, setStrike] = useState(100);
   const [time, setTime] = useState(1);
-  const [rate, setRate] = useState(0.05);
-  const [volatility, setVolatility] = useState(0.2);
-  const [optionType, setOptionType] = useState<OptionType>("call");
-  const [optionStyle, setOptionStyle] = useState<OptionStyle>("european");
-  const [dividend, setDividend] = useState(0);
+  const [risk_free_rate, setRate] = useState(0.05);
+  const [sigma, setSigma] = useState(0.2);
+  const [dividends, setDividends] = useState(0);
+  const [option_type, setOptionType] = useState<OptionType>("call");
+  const [option_style, setOptionStyle] = useState<OptionStyle>("european");
+  const [return_paths, setReturnPaths] = useState<boolean>(true);
 
   const [result, setResult] = useState<SimulationResult | null>(null);
 
   const runSimulation = () => {
     api.post("/monte-carlo-options/single-option", {
-      numSimulations,
-      numSteps,
       spot,
       strike,
       time,
-      rate,
-      volatility,
-      optionType,
-      optionStyle,
-      dividend
+      risk_free_rate,
+      sigma,
+      dividends,
+      num_simulations,
+      num_steps,
+      option_type,
+      option_style,
+      return_paths
     }).then(response => {
+      console.log(response)
       setResult(response.data as SimulationResult);
     }).catch(error => {
       console.error("Error running simulation:", error);
     });
   };
+
+  const blackScholesPrice = blackScholesSimulation(spot, strike, time, risk_free_rate, sigma, option_type, dividends);
 
   return (
     <div className={styles["monte-carlo-options-container"]}>
@@ -49,22 +58,22 @@ const MonteCarloOptions = () => {
       <h3>Option Variables</h3>
 
       <OptionTypeSelector 
-        optionType={optionType}
+        optionType={option_type}
         setOptionType={setOptionType}
       />
 
       <OptionStyleSelector 
-        optionType={optionStyle}
+        optionType={option_style}
         setOptionType={setOptionStyle}
       />
 
       <VariableSlider 
         label="Dividend Yield (q)"
-        value={dividend}
+        value={dividends}
         min={0}
         max={0.2}
         step={0.001}
-        setValue={setDividend}
+        setValue={setDividends}
       />
 
       <VariableSlider 
@@ -94,7 +103,7 @@ const MonteCarloOptions = () => {
 
       <VariableSlider 
         label="Risk-Free Rate"
-        value={rate}
+        value={risk_free_rate}
         min={0}
         max={0.2}
         step={0.001}
@@ -103,11 +112,11 @@ const MonteCarloOptions = () => {
 
       <VariableSlider 
         label="Volatility"
-        value={volatility}
+        value={sigma}
         min={0.01}
         max={1}
         step={0.01}
-        setValue={setVolatility}
+        setValue={setSigma}
       />
 
       <h3>Simulation Settings</h3>
@@ -117,7 +126,7 @@ const MonteCarloOptions = () => {
         min={100}
         max={10000}
         step={100}
-        value={numSimulations}
+        value={num_simulations}
         setValue={setNumSimulations}
       />
 
@@ -126,17 +135,24 @@ const MonteCarloOptions = () => {
         min={10}
         max={500}
         step={10}
-        value={numSteps}
+        value={num_steps}
         setValue={setNumSteps}
       />
+
+      <FormControlLabel control={<Switch onChange={() => setReturnPaths(!return_paths)} defaultChecked={return_paths}  />} label="Show Graph Output" />
 
       <button onClick={() => runSimulation()}>
         Run Simulation
       </button>
 
       <div>
-        Option Price: ${result?.optionPrice}
+        Monte Carlo Option Price Estimate: ${result?.option_price.toFixed(2)}
       </div>
+      <div>
+        Black-Scholes Option Price Estimate: ${blackScholesPrice.toFixed(2)}
+      </div>
+
+      {result && result.paths && }
 
     </div>
   )

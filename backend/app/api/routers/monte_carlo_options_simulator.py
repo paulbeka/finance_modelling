@@ -9,8 +9,8 @@ def simulate_options(req: MonteCarloOptionInput):
     simulation_output = monte_carlo_options_simulator(
         S=req.spot,
         K=req.strike,
-        T=req.T,
-        r=req.r,
+        T=req.time,
+        r=req.risk_free_rate,
         sigma=req.sigma,
         simulations=req.num_simulations,
         steps=req.num_steps,

@@ -28,12 +28,12 @@ def monte_carlo_options_simulator(
   else:
     payoffs = np.zeros(simulations)
   
-  options_price = discount_factor * np.mean(payoffs)
+  option_price = discount_factor * np.mean(payoffs)
 
   if return_paths:
     selected_paths = paths[np.random.choice(simulations, size=min(N_RET_PATHS, simulations), replace=False)]
-    return {"options_price": options_price, "paths": selected_paths.tolist()}
-  return {"options_price": options_price }
+    return {"option_price": option_price, "paths": selected_paths.tolist()}
+  return {"option_price": option_price }
 
 def monte_carlo_portfolio_options_simulator(
     

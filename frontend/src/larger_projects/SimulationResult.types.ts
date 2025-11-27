@@ -1,3 +1,4 @@
 export type SimulationResult = {
-  optionPrice: Float32Array
+  option_price: number,
+  paths?: number[][]
 };
