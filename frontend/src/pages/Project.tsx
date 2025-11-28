@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom"
 import MonteCarloOptions from "../larger_projects/monte_carlo_option/MonteCarloOptions";
 import styles from "./CSS/project.module.css";
 import { BsArrowLeftShort } from "react-icons/bs";
+import BinomialEstimation from "../larger_projects/binomial/BinomialEstimation";
 
 const Project = () => {
   const { projectId } = useParams<{ projectId: string }>();
   
   const components: { [key: string]: React.ReactElement } = {
-    "monte-carlo": <MonteCarloOptions />
+    "monte-carlo": <MonteCarloOptions />,
+    "binomial": <BinomialEstimation />
   };
 
   return (

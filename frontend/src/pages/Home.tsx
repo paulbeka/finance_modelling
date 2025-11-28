@@ -52,9 +52,15 @@ const Home = () => {
   ];
 
   const largerProjects = [
-    { name: "Monte-Carlo Option Price Simulation", 
-      desc: "", 
+    { 
+      name: "Monte-Carlo Option Price Simulation", 
+      desc: "Prices options using a Monte-Carlo simulation.", 
       link: "/monte-carlo" 
+    },
+    {
+      name: "Binomial Pricing Simulation (Fast)",
+      desc: "A binomial calculator for pricing American, European, or Asian options.",
+      link: "/binomial"
     }
   ];
 

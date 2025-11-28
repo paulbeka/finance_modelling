@@ -34,7 +34,7 @@ const MonteCarloOptions = () => {
     api.post("/monte-carlo-options/single-option", {
       spot,
       strike,
-      time,
+      time, 
       risk_free_rate,
       sigma,
       dividends,
@@ -138,7 +138,7 @@ const MonteCarloOptions = () => {
       <div className={styles["run-simulation-container"]}>
         <FormControlLabel control={<Switch onChange={() => setReturnPaths(!return_paths)} defaultChecked={return_paths}  />} label="Show Graph Output" />
 
-        <Button variant="contained" onClick={() => runSimulation()}>
+        <Button variant="contained" onClick={runSimulation}>
           Run Simulation
         </Button>
       </div>
