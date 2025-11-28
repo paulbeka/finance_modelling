@@ -4,6 +4,7 @@ import BlackScholesModule from "../mini_projects/blackscholes/BlackScholes";
 import BinomialModule from "../mini_projects/binomial/BinomialModel";
 import style from "./CSS/home.module.css";
 import FixedIncomeYieldSolver from "../mini_projects/fi_yield_solver/FixedIncomeYieldSolver";
+import { BsArrowRightShort } from "react-icons/bs";
 
 const ExpandPanel = ({ isOpen, children }: any) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -72,8 +73,10 @@ const Home = () => {
               className={style.projectCard}
               onClick={() => toggle(proj.name)}
             >
-              <h5>{proj.name}</h5>
-              <p>{proj.desc}</p>
+              <div>
+                <h5>{proj.name}</h5>
+                <p>{proj.desc}</p>
+              </div>
             </div>
 
             <ExpandPanel isOpen={openProject === proj.name}>
@@ -88,8 +91,11 @@ const Home = () => {
         {largerProjects.map((proj) => (
           <div key={proj.name} className={style.projectWrapper}>
             <Link to={`project/${proj.link}`} className={style.projectCard}>
-              <h5>{proj.name}</h5>
-              <p>{proj.desc}</p>
+              <div>
+                <h5>{proj.name}</h5>
+                <p>{proj.desc}</p>
+              </div>
+              <BsArrowRightShort className={style.rightArrow} size={40} />
             </Link>
           </div>
         ))}
