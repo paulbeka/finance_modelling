@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .api.routers import monte_carlo_options_simulator
+from .api.routers import monte_carlo_options_endpoints
 from .config.config import ALLOWED_ORIGINS
 
 app = FastAPI()
 
-app.include_router(monte_carlo_options_simulator.router, prefix="/api/monte-carlo-options", tags=["Monte Carlo Options Simulator"])
+app.include_router(monte_carlo_options_endpoints.router, prefix="/api/monte-carlo-options", tags=["Monte Carlo Options Simulator"])
 
 app.add_middleware(
   CORSMiddleware,

@@ -5,7 +5,7 @@ N_RET_PATHS = 20
 
 
 def monte_carlo_options_simulator(
-  S, K, T, r, sigma, simulations, steps, option_type="call", option_style="european",
+  S, K, T, r, q, sigma, simulations, steps, option_type="call", option_style="european",
   return_paths=False
 ):
   """
@@ -17,8 +17,9 @@ def monte_carlo_options_simulator(
   paths[:, 0] = S
 
   for t in range(1, steps + 1):
-    z = np.random.standard_normal(simulations)
-    paths[:, t] = paths[:, t - 1] * np.exp((r - 0.5 * sigma ** 2) * dt + sigma * np.sqrt(dt) * z)
+    z = np.random.standard_normal(simulations // 2)
+    z = np.concatenate([z, -z])
+    paths[:, t] = paths[:, t - 1] * np.exp(((r-q) - 0.5 * sigma ** 2) * dt + sigma * np.sqrt(dt) * z)
   
   if option_style == "european":
     if option_type == "call":

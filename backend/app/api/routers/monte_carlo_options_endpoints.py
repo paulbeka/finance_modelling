@@ -11,6 +11,7 @@ def simulate_options(req: MonteCarloOptionInput):
         K=req.strike,
         T=req.time,
         r=req.risk_free_rate,
+        q=req.dividends,
         sigma=req.sigma,
         simulations=req.num_simulations,
         steps=req.num_steps,
