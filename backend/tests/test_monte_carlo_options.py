@@ -54,7 +54,6 @@ def test_call_option_with_dividends_is_correct():
     assert abs(actual_price - mc_price_with_dividends) <= 0.3
 
 
-
 def test_put_option_with_dividends_is_correct():
     mc_price_with_dividends = monte_carlo_options_simulator(
         S=100, K=100, T=1, r=0.05, sigma=0.2, q=0.1,

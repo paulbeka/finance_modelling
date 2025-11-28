@@ -1,6 +1,6 @@
 import React from "react"
 import { useParams } from "react-router-dom"
-import MonteCarloOptions from "../larger_projects/MonteCarloOptions";
+import MonteCarloOptions from "../larger_projects/monte_carlo_option/MonteCarloOptions";
 import styles from "./CSS/project.module.css";
 import { BsArrowLeftShort } from "react-icons/bs";
 

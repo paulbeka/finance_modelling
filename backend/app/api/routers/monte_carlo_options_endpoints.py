@@ -16,7 +16,6 @@ def simulate_options(req: MonteCarloOptionInput):
         simulations=req.num_simulations,
         steps=req.num_steps,
         option_type=req.option_type,
-        option_style=req.option_style,
         return_paths=req.return_paths
     )
     return MonteCarloOptionOutput(**simulation_output)

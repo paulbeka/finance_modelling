@@ -10,7 +10,6 @@ class MonteCarloOptionInput(BaseModel):
     num_simulations: int
     num_steps: int
     option_type: str = "call"
-    option_style: str = "european"
     return_paths: bool = False
 
 

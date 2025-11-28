@@ -39,7 +39,7 @@ const BinomialModule = () => {
 
   return (
     <div className={styles["binomial-module-container"]}>
-      <h3>Binomial Model Calculator (Slow)</h3>
+      <h3>European Option Binomial Model Calculator (Slow)</h3>
       
       <OptionTypeSelector
         optionType={optionType}

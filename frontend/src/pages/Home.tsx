@@ -40,8 +40,8 @@ const Home = () => {
       component: <BlackScholesModule />,
     },
     {
-      name: "Binomial Model",
-      desc: "Binomial pricing model for pricing assets.",
+      name: "European Option Binomial Model Calculator",
+      desc: "[TODO: American Options] Binomial pricing model for pricing assets following a European Option style",
       component: <BinomialModule />,
     },
     {

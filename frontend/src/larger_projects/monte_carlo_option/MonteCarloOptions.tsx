@@ -1,12 +1,11 @@
 import { useState } from "react";
-import VariableSlider from "../mini_projects/util/VariableSlider";
-import OptionTypeSelector from "../mini_projects/util/OptionTypeSelector";
-import OptionStyleSelector from "../mini_projects/util/OptionStyleSelector";
-import { OptionStyle, OptionType } from "../mini_projects/util/common_types.types";
-import { api } from "../api/Api";
+import VariableSlider from "../../mini_projects/util/VariableSlider";
+import OptionTypeSelector from "../../mini_projects/util/OptionTypeSelector";
+import { OptionType } from "../../mini_projects/util/common_types.types";
+import { api } from "../../api/Api";
 import styles from "./CSS/monte_carlo.module.css";
 import { SimulationResult } from "./SimulationResult.types";
-import { blackScholesSimulation } from "../mini_projects/blackscholes/calc/black_scholes";
+import { blackScholesSimulation } from "../../mini_projects/blackscholes/calc/black_scholes";
 import { Switch } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MonteCarloChartDisplay from "./MonteCarloChartDisplay";
@@ -25,7 +24,6 @@ const MonteCarloOptions = () => {
   const [sigma, setSigma] = useState(0.2);
   const [dividends, setDividends] = useState(0);
   const [option_type, setOptionType] = useState<OptionType>("call");
-  const [option_style, setOptionStyle] = useState<OptionStyle>("european");
   const [return_paths, setReturnPaths] = useState<boolean>(true);
 
   const [result, setResult] = useState<SimulationResult | null>(null);
@@ -43,7 +41,6 @@ const MonteCarloOptions = () => {
       num_simulations,
       num_steps,
       option_type,
-      option_style,
       return_paths
     }).then(response => {
       setLoading(false);
@@ -64,11 +61,6 @@ const MonteCarloOptions = () => {
       <OptionTypeSelector 
         optionType={option_type}
         setOptionType={setOptionType}
-      />
-
-      <OptionStyleSelector 
-        optionType={option_style}
-        setOptionType={setOptionStyle}
       />
 
       <VariableSlider 

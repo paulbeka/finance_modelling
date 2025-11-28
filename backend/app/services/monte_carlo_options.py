@@ -5,8 +5,7 @@ N_RET_PATHS = 20
 
 
 def monte_carlo_options_simulator(
-  S, K, T, r, q, sigma, simulations, steps, option_type="call", option_style="european",
-  return_paths=False
+  S, K, T, r, q, sigma, simulations, steps, option_type="call", return_paths=False
 ):
   """
   A function to calculate the MC expected retrun of an option given a singular stock
@@ -21,13 +20,10 @@ def monte_carlo_options_simulator(
     z = np.concatenate([z, -z])
     paths[:, t] = paths[:, t - 1] * np.exp(((r-q) - 0.5 * sigma ** 2) * dt + sigma * np.sqrt(dt) * z)
   
-  if option_style == "european":
-    if option_type == "call":
-      payoffs = np.maximum(paths[:, -1] - K, 0)
-    else:
-      payoffs = np.maximum(K - paths[:, -1], 0)
+  if option_type == "call":
+    payoffs = np.maximum(paths[:, -1] - K, 0)
   else:
-    payoffs = np.zeros(simulations)
+    payoffs = np.maximum(K - paths[:, -1], 0)
   
   option_price = discount_factor * np.mean(payoffs)
 
@@ -35,6 +31,7 @@ def monte_carlo_options_simulator(
     selected_paths = paths[np.random.choice(simulations, size=min(N_RET_PATHS, simulations), replace=False)]
     return {"option_price": option_price, "paths": selected_paths.tolist()}
   return {"option_price": option_price }
+  
 
 def monte_carlo_portfolio_options_simulator(
     
