@@ -7,9 +7,11 @@ import { api } from "../api/Api";
 import styles from "./CSS/monte_carlo.module.css";
 import { SimulationResult } from "./SimulationResult.types";
 import { blackScholesSimulation } from "../mini_projects/blackscholes/calc/black_scholes";
-import { LineChart } from "@mui/x-charts/LineChart";
 import { Switch } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
+import MonteCarloChartDisplay from "./MonteCarloChartDisplay";
+import { Mosaic } from "react-loading-indicators";
+import Button from '@mui/material/Button';
 
 
 const MonteCarloOptions = () => {
@@ -27,8 +29,10 @@ const MonteCarloOptions = () => {
   const [return_paths, setReturnPaths] = useState<boolean>(true);
 
   const [result, setResult] = useState<SimulationResult | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const runSimulation = () => {
+    setLoading(true);
     api.post("/monte-carlo-options/single-option", {
       spot,
       strike,
@@ -42,7 +46,7 @@ const MonteCarloOptions = () => {
       option_style,
       return_paths
     }).then(response => {
-      console.log(response)
+      setLoading(false);
       setResult(response.data as SimulationResult);
     }).catch(error => {
       console.error("Error running simulation:", error);
@@ -133,26 +137,49 @@ const MonteCarloOptions = () => {
       <VariableSlider 
         label="Number of Steps per Simulation"
         min={10}
-        max={500}
+        max={1000}
         step={10}
         value={num_steps}
         setValue={setNumSteps}
       />
 
-      <FormControlLabel control={<Switch onChange={() => setReturnPaths(!return_paths)} defaultChecked={return_paths}  />} label="Show Graph Output" />
+      <div className={styles["run-simulation-container"]}>
+        <FormControlLabel control={<Switch onChange={() => setReturnPaths(!return_paths)} defaultChecked={return_paths}  />} label="Show Graph Output" />
 
-      <button onClick={() => runSimulation()}>
-        Run Simulation
-      </button>
-
-      <div>
-        Monte Carlo Option Price Estimate: ${result?.option_price.toFixed(2)}
-      </div>
-      <div>
-        Black-Scholes Option Price Estimate: ${blackScholesPrice.toFixed(2)}
+        <Button variant="contained" onClick={() => runSimulation()}>
+          Run Simulation
+        </Button>
       </div>
 
-      {result && result.paths && }
+      <div className={styles["output-container"]}>
+        <div className={styles["output-box-container"]}>
+          Monte Carlo Option Price Estimate: 
+          <div className={styles["output-box"]}>
+            {result ? (
+              <>
+                ${result.option_price.toFixed(2)}{" "}
+                <span style={{ fontWeight: "normal" }}>
+                  (difference of ${(Number(result.option_price.toFixed(2)) - Number(blackScholesPrice.toFixed(2))).toFixed(2)})
+                </span>
+              </>
+            ) : (
+              <i style={{ fontWeight: "normal" }}>Run Simulation First</i>
+            )}
+          </div>
+        </div>
+        <div className={styles["output-box-container"]}>
+          Black-Scholes Option Price Estimate:
+          <div className={styles["output-box"]}>
+            ${blackScholesPrice.toFixed(2)}
+          </div>
+        </div>
+      </div>
+
+      {
+        loading && return_paths ? <div className={styles["loading-container"]}><Mosaic color="#3f50b5" size="medium" text="" textColor="" /></div> : 
+        result && result.paths && <MonteCarloChartDisplay data={result.paths} />
+      }
+        
 
     </div>
   )
