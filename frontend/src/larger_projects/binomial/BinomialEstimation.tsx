@@ -5,13 +5,14 @@ import OptionStyleSelector from "../../mini_projects/util/OptionStyleSelector";
 import DropDownLatticeSelector from "../../mini_projects/util/DropDownLatticeSelector";
 import VariableSlider from "../../mini_projects/util/VariableSlider";
 import Button from '@mui/material/Button';
+import { ThreeDot } from "react-loading-indicators";
 import styles from "./CSS/BinomialEstimation.module.css";
 import { api } from "../../api/Api";
 
 const BinomialEstimation = () => {
   const [option_type, setOptionType] = useState<OptionType>("call");
-  const [optionStyle, setOptionStyle] = useState<OptionStyle>("european");
-  const [latticeType, setLatticeType] = useState<BinomialLatticeType>("CRR");
+  const [option_style, setOptionStyle] = useState<OptionStyle>("european");
+  const [lattice_type, setLatticeType] = useState<BinomialLatticeType>("CRR");
   const [num_steps, setNumSteps] = useState<number>(100);
   const [spot, setSpot] = useState<number>(100);
   const [strike, setStrike] = useState<number>(100);
@@ -22,8 +23,11 @@ const BinomialEstimation = () => {
 
   const [binomialPrice, setBinomialPrice] = useState<number>();
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const runSimulation = () => {
-    api.post("/monte-carlo-options/single-option", {
+    setLoading(true);
+    api.post("/binomial/binomial-simulation", {
       spot,
       strike,
       time, 
@@ -31,14 +35,17 @@ const BinomialEstimation = () => {
       sigma,
       dividends,
       num_steps,
-      option_type
+      option_type,
+      option_style,
+      lattice_type
     })
     .then((res) => {
-      setBinomialPrice(res.data.binomialPrice);
+      setBinomialPrice(res.data.binomial_price);
     })
     .catch((err) => {
       console.error(err);
     })
+    .finally(() => setLoading(false));
   }
  
   return (
@@ -51,12 +58,12 @@ const BinomialEstimation = () => {
       />
 
       <OptionStyleSelector
-        optionStyle={optionStyle}
+        optionStyle={option_style}
         setOptionStyle={setOptionStyle}
       />
 
       <DropDownLatticeSelector 
-        latticeType={latticeType}
+        latticeType={lattice_type}
         setLatticeType={setLatticeType}
       />
 
@@ -128,9 +135,10 @@ const BinomialEstimation = () => {
       </Button>
 
       <div className={styles["binomial-result-container"]}>
-        {binomialPrice}
+        {loading ? <ThreeDot color="white" size="medium" text="" textColor="" /> : 
+          binomialPrice !== undefined ? <p style={{ fontWeight: "bold" }}>${binomialPrice.toFixed(2)}</p> : 
+          <i>Run the simulation for a result</i>}
       </div>
-      
     </div>
   )
 }

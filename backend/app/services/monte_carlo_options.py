@@ -32,10 +32,3 @@ def monte_carlo_options_simulator(
     return {"option_price": option_price, "paths": selected_paths.tolist()}
   return {"option_price": option_price }
   
-
-def monte_carlo_portfolio_options_simulator(
-    
-):
-  """
-  """
-  pass

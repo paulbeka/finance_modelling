@@ -43,11 +43,11 @@ const MonteCarloOptions = () => {
       option_type,
       return_paths
     }).then(response => {
-      setLoading(false);
       setResult(response.data as SimulationResult);
     }).catch(error => {
       console.error("Error running simulation:", error);
-    });
+    })
+    .finally(() => setLoading(false));
   };
 
   const blackScholesPrice = blackScholesSimulation(spot, strike, time, risk_free_rate, sigma, option_type, dividends);

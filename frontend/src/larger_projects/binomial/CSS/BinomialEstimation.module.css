@@ -5,3 +5,12 @@
   max-width: 800px;
   margin: 0 auto;
 }
+
+.binomial-result-container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  background: rgb(131, 182, 212);
+  border-radius: 10px;
+  text-align: center;
+}
