@@ -10,8 +10,8 @@ def simulate_binomial(
 
   u, d, p = get_lattice_parameters(dt, r, sigma, lattice_type)
 
-  rf_q = (np.exp(r * dt) - d) / (u-d)
-  discount_factor = np.exp(-r * dt)
+  rf_q = (np.exp((r-q) * dt) - d) / (u-d)
+  discount_factor = np.exp(-(r+q) * dt)
 
   C = S * d ** (np.arange(steps, -1, -1)) * u ** (np.arange(0, steps+1, 1))
   if option_type == "call":
@@ -22,7 +22,16 @@ def simulate_binomial(
     raise ValueError("Value should only be a call or a put.")
 
   for i in range(steps, 0, -1):
-    C = discount_factor * ( (C[1:i+1] * rf_q) + (C[0:i] * (1-rf_q)) )
+    if option_style == "european":
+      C = discount_factor * ( (C[1:i+1] * rf_q) + (C[0:i] * (1-rf_q)) )
+    elif option_style == "american":
+      S_prices = S * (d ** np.arange(i, -1, -1)) * (u ** np.arange(0, i+1))
+      C[:i+1] = discount_factor * ( rf_q * C[1:i+2] + (1-rf_q) * C[0:i+1] )
+      C = C[:-1]
+      if option_type == "put":
+        C = np.maximum(C, K - S_prices)
+      else:
+        C = np.maximum(C, S_prices - K)
 
   binomial_price = C[0]
 
