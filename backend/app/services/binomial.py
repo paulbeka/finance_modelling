@@ -25,9 +25,9 @@ def simulate_binomial(
     if option_style == "european":
       C = discount_factor * ( (C[1:i+1] * rf_q) + (C[0:i] * (1-rf_q)) )
     elif option_style == "american":
-      S_prices = S * (d ** np.arange(i, -1, -1)) * (u ** np.arange(0, i+1))
-      C[:i+1] = discount_factor * ( rf_q * C[1:i+2] + (1-rf_q) * C[0:i+1] )
-      C = C[:-1]
+      S_prices = S * (d ** np.arange(i-1, -1, -1)) * (u ** np.arange(0, i))
+      new_C = discount_factor * (rf_q * C[1:i+1] + (1 - rf_q) * C[0:i])
+      C = new_C 
       if option_type == "put":
         C = np.maximum(C, K - S_prices)
       else:
