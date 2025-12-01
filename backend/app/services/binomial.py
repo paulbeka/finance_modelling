@@ -48,7 +48,7 @@ def get_lattice_parameters(dt, r, sigma, q, lattice_type):
     d = math.exp(((r-q) - 0.5 * sigma**2) * dt - sigma * math.sqrt(dt))
     p = 0.5
 
-  elif lattice_type == "TIAN": # TODO: fix TIAN bugginess
+  elif lattice_type == "TIAN":
     a = math.exp((r-q) * dt)
     b = math.exp((sigma**2) * dt)
     u = 0.5 * a * b * (b + 1 + math.sqrt(b**2 + 2*b - 3))
@@ -66,3 +66,4 @@ def get_lattice_parameters(dt, r, sigma, q, lattice_type):
     p = (math.exp((r-q) * dt) - d) / (u - d)
 
   return u, d, p
+

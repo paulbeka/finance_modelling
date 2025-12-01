@@ -61,6 +61,11 @@ const Home = () => {
       name: "Binomial Pricing Simulation (Fast)",
       desc: "A binomial calculator for pricing American, European, or Asian options.",
       link: "/binomial"
+    },
+    {
+      name: "Portfolio Optimisation",
+      desc: "",
+      link: "/portfolio-optimisation"
     }
   ];
 

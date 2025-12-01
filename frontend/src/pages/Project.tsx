@@ -4,13 +4,15 @@ import MonteCarloOptions from "../larger_projects/monte_carlo_option/MonteCarloO
 import styles from "./CSS/project.module.css";
 import { BsArrowLeftShort } from "react-icons/bs";
 import BinomialEstimation from "../larger_projects/binomial/BinomialEstimation";
+import PortfolioOptimisation from "../larger_projects/porfolio_optimisation/PortfolioOptimisation";
 
 const Project = () => {
   const { projectId } = useParams<{ projectId: string }>();
   
   const components: { [key: string]: React.ReactElement } = {
     "monte-carlo": <MonteCarloOptions />,
-    "binomial": <BinomialEstimation />
+    "binomial": <BinomialEstimation />,
+    "portfolio-optimisation": <PortfolioOptimisation />
   };
 
   return (

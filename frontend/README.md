@@ -49,4 +49,8 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ### TODO
 
  - Add the dividend rate to the slow binomial calculator
+ - consider a black-scholes mini heatmap with PnL
  - LSMC for the Monte-Carlo pricing model for American options (early puts or negative r for calls)
+
+ - Finish the Markowitz Portfolio Optimization page
+ - Create a stock protfolio MC simulator 

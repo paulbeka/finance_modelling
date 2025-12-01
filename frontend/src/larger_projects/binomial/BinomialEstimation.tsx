@@ -70,7 +70,7 @@ const BinomialEstimation = () => {
       <VariableSlider
         label="Number of Steps"
         min={1}
-        max={500}
+        max={5000}
         step={1}
         value={num_steps}
         setValue={setNumSteps}
@@ -105,7 +105,7 @@ const BinomialEstimation = () => {
 
       <VariableSlider
         label="Risk-Free Rate (%)"
-        min={0}
+        min={-0.1}
         max={0.2}
         step={0.001}
         value={risk_free_rate}
