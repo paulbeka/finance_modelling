@@ -1,13 +1,13 @@
 services:
   frontend:
-    image: ghcr.io/paulbeka/finance-frontend:latest
+    image: ghcr.io/paulbeka/finance-frontend:main
     container_name: finance_frontend
     restart: always
     ports:
       - "80:80"
 
   backend:
-    image: ghcr.io/paulbeka/finance-backend:latest
+    image: ghcr.io/paulbeka/finance-backend:main
     container_name: finance_backend
     restart: always
     ports:
