@@ -1,18 +1,16 @@
 services:
   frontend:
-    build:
-      context: ./frontend
+    image: ghcr.io/paulbeka/finance-frontend:latest
     container_name: finance_frontend
     restart: always
     ports:
       - "80:80"
 
   backend:
-    build:
-      context: ./backend
+    image: ghcr.io/paulbeka/finance-backend:latest
     container_name: finance_backend
     restart: always
     ports:
       - "8000:8000"
     env_file:
-      - ./backend/.env 
+      - ./backend/.env

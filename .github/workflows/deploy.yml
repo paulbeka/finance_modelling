@@ -1,32 +1,85 @@
-name: Deploy to DigitalOcean
-
-
+name: Build and Deploy with GHCR
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
 
-      
+env:
+  REGISTRY: ghcr.io
+  FRONTEND_IMAGE_NAME: ${{ github.repository_owner }}/finance-frontend
+  BACKEND_IMAGE_NAME: ${{ github.repository_owner }}/finance-backend
+
 jobs:
-  deploy-to-digital-ocean:
+  build-and-push:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Extract metadata for frontend image
+        id: meta-frontend
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+
+      - name: Build and push frontend image
+        id: push-frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+          labels: ${{ steps.meta-frontend.outputs.labels }}
+
+      - name: Extract metadata for backend image
+        id: meta-backend
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
+
+      - name: Build and push backend image
+        id: push-backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
     steps:
       - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
-          
-      - name: Set up SSH agent
-        uses: webfactory/ssh-agent@v0.5.3
+          ssh-keyscan -H "${{ secrets.DO_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.DO_DEPLOY_KEY }}
 
-      - name: Deploy to server
+      - name: Deploy on server
         run: |
           ssh root@${{ secrets.DO_HOST }} << 'EOF'
             cd /var/www/finance_modelling
-            git pull origin main
             docker compose pull
-            docker compose up -d --build
+            docker compose up -d
             docker system prune -f
           EOF
