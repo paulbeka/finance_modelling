@@ -54,3 +54,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
  - Finish the Markowitz Portfolio Optimization page
  - Create a stock protfolio MC simulator 
+
+ - Add the testing phase of the github action
