@@ -1,7 +1,6 @@
 services:
   reverse-proxy:
     image: nginx:stable
-    container_name: reverse_proxy
     restart: always
     ports:
       - "80:80"
@@ -10,10 +9,11 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt
+    networks:
+      - webnet
 
   certbot:
     image: certbot/certbot
-    container_name: certbot
     restart: always
     volumes:
       - ./certbot/www:/var/www/certbot
@@ -26,19 +26,27 @@ services:
           sleep 12h;
         done
       '
+    networks:
+      - webnet
 
   frontend:
     image: ghcr.io/paulbeka/finance-frontend:main
-    container_name: finance_frontend
     restart: always
     expose:
       - "80"
+    networks:
+      - webnet
 
   backend:
     image: ghcr.io/paulbeka/finance-backend:main
-    container_name: finance_backend
     restart: always
     expose:
       - "8000"
     env_file:
       - ./backend/.env
+    networks:
+      - webnet
+
+
+networks:
+  webnet:

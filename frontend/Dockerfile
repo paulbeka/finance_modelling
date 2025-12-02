@@ -1,5 +1,7 @@
 FROM node:20-alpine AS build
 WORKDIR /app
+ARG REACT_APP_BASE_URL
+RUN echo "REACT_APP_BASE_URL=${REACT_APP_BASE_URL}" > .env
 COPY package*.json ./
 RUN npm ci
 COPY . .
