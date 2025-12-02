@@ -1,5 +1,6 @@
 import { CircularProgress, Autocomplete, TextField } from "@mui/material";
 import { useState, Dispatch, SetStateAction } from "react";
+import { api } from "../../api/Api";
 
 
 const AssetSelector = ({assets, setAssets} : { assets: string[] | undefined, setAssets: Dispatch<SetStateAction<string[] | undefined>> }) => {
@@ -10,7 +11,7 @@ const AssetSelector = ({assets, setAssets} : { assets: string[] | undefined, set
   const [loading, setLoading] = useState<boolean>();
 
   const getTickers = () => {
-
+    api.get("/getTickers/")
   }
 
   return (
