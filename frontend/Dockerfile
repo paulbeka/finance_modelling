@@ -1,10 +1,17 @@
 FROM node:20-alpine AS build
 WORKDIR /app
+
 ARG REACT_APP_BASE_URL
-RUN echo "REACT_APP_BASE_URL=${REACT_APP_BASE_URL}" > .env
+ARG REACT_APP_GA_TOKEN
+
 COPY package*.json ./
 RUN npm ci
+
 COPY . .
+
+RUN printf "REACT_APP_BASE_URL=%s\nREACT_APP_GA_TOKEN=%s\n" \
+    "$REACT_APP_BASE_URL" "$REACT_APP_GA_TOKEN" > .env
+
 RUN npm run build
 
 FROM nginx:stable-alpine

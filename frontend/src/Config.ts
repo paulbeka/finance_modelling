@@ -1,1 +1,2 @@
 export const BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://localhost:8000/api";
+export const GA_TOKEN = process.env.REACT_APP_GS_TOKEN ? process.env.REACT_APP_GS_TOKEN : "";

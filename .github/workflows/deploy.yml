@@ -45,6 +45,7 @@ jobs:
           labels: ${{ steps.meta-frontend.outputs.labels }}
           build-args: |
             REACT_APP_BASE_URL=${{ secrets.FRONTEND_API_URL }}
+            REACT_APP_GS_TOKEN=${{ secrets.GA_TOKEN }}
 
       - name: Extract metadata for backend image
         id: meta-backend
@@ -82,7 +83,8 @@ jobs:
           ssh root@${{ secrets.DO_HOST }} << 'EOF'
             cd /var/www/finance_modelling
             git pull origin main
+            docker compose down
             docker compose pull
-            docker compose up -d
+            docker compose up -d --remove-orphans
             docker system prune -f
           EOF

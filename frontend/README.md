@@ -56,3 +56,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
  - Create a stock protfolio MC simulator 
 
  - Add the testing phase of the github action
+ - fix the proxy pass for every subdomain /* to point correctly (check EUMS nginx)
+ 
