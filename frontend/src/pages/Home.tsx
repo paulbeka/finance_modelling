@@ -41,7 +41,7 @@ const Home = () => {
     },
     {
       name: "European Option Binomial Model Calculator",
-      desc: "[TODO: American Options] Binomial pricing model for pricing assets following a European Option style",
+      desc: "Binomial pricing model for pricing assets following a European Option style",
       component: <BinomialModule />,
     },
     {
