@@ -7,7 +7,7 @@ const VariableSlider = (props: any) => {
       <label className={styles["variable-label"]}>{props.label}</label>
       <Slider
         size="small"
-        value={props.value}
+        value={props.value ?? 0}
         min={props.min}
         max={props.max}
         step={props.step}

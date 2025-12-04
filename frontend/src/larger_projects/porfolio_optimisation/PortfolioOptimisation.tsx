@@ -9,36 +9,47 @@ const PortfolioOptimisation = () => {
   const [portfolioAllocation, setPortfolioAllocation] = useState<{[key: string]: number}>({}); 
   
   useEffect(() => {
-    for (var asset in assets) {
-      if (!(asset in portfolioAllocation)) {
-        setPortfolioAllocation(prev => ({
-          ...prev,
-          asset: 10
-        }));
+    if (!assets) return;
+
+    setPortfolioAllocation(prev => {
+      const updated = { ...prev };
+
+      assets.forEach(asset => {
+        if (!(asset in updated)) {
+          updated[asset] = 10;
+        }
+      });
+
+      return updated;
+    });
+  }, [assets]);
+
+  const rebalancePortfolio = (fixedAsset?: string, fixedValue?: number) => {
+    setPortfolioAllocation(prev => {
+      const updated = {
+        ...prev,
+        ...(fixedAsset ? { [fixedAsset]: fixedValue ?? prev[fixedAsset] ?? 0 } : {})
+      };
+
+      const fixed = fixedAsset ? fixedValue ?? updated[fixedAsset] : 0;
+
+      let total = 0;
+      for (const asset in updated) {
+        if (asset !== fixedAsset) total += updated[asset];
       }
-    }
-  }, [assets])
 
-  const rebalancePortfolio = async (fixedAsset?: string, fixedValue?: number) => {
-    const original = portfolioAllocation;
-    const fixed = fixedAsset ? fixedValue ?? original[fixedAsset] : 0;
+      const newDict: { [key: string]: number } = {};
 
-    let total = 0;
-    for (const asset in original) {
-      if (asset !== fixedAsset) total += original[asset];
-    }
-
-    const newDict: {[key: string]: number} = {};
-
-    for (const asset in original) {
-      if (asset === fixedAsset) {
-        newDict[asset] = fixed; 
-      } else {
-        newDict[asset] = (original[asset] / total) * (100 - fixed);
+      for (const asset in updated) {
+        if (asset === fixedAsset) {
+          newDict[asset] = fixed;
+        } else {
+          newDict[asset] = (updated[asset] / total) * (100 - fixed);
+        }
       }
-    }
 
-    setPortfolioAllocation(newDict);
+      return newDict;
+    });
   };
 
   const runSimulation = () => {
@@ -61,11 +72,7 @@ const PortfolioOptimisation = () => {
             value={portfolioAllocation[asset]}
             min={0}
             max={100}
-            setValue={(newValue: any) => {
-              setPortfolioAllocation(prev => ({
-                ...prev,
-                [asset]: newValue
-              }));
+            setValue={(newValue: number) => {
               rebalancePortfolio(asset, newValue);
             }}
           />

@@ -36,7 +36,11 @@ const AssetSelector = ({
         params: { query: searchValue },
       });
 
-      setTickers(res.data || []);
+      if (res.status === 200) {
+        setTickers(res.data || []);
+      } else {
+        setTickers([]);
+      }
       setLoading(false);
     }, 500);
   }, []);
