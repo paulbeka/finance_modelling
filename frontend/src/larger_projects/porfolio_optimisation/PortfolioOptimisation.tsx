@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
 import AssetSelector from "./AssetSelector";
 import VariableSlider from "../../mini_projects/util/VariableSlider";
+import { Button } from "@mui/material";
+import styles from "./CSS/PortfolioOptimisation.module.css";
 
 const PortfolioOptimisation = () => {
-  const [assets, setAssets] = useState<string[] | undefined>(["AAPL", "STOXX 600", "S&P"]);
-  const [portfolioAllocation, setPortfolioAllocation] = useState<{[key: string]: number}>({
-    "AAPL": 10,
-    "STOXX 600": 50,
-    "S&P": 10
-  }); 
+  const [assets, setAssets] = useState<string[] | undefined>([]);
+  const [portfolioAllocation, setPortfolioAllocation] = useState<{[key: string]: number}>({}); 
   
+  useEffect(() => {
+    for (var asset in assets) {
+      if (!(asset in portfolioAllocation)) {
+        setPortfolioAllocation(prev => ({
+          ...prev,
+          asset: 10
+        }));
+      }
+    }
+  }, [assets])
+
   const rebalancePortfolio = async (fixedAsset?: string, fixedValue?: number) => {
     const original = portfolioAllocation;
     const fixed = fixedAsset ? fixedValue ?? original[fixedAsset] : 0;
@@ -32,12 +41,12 @@ const PortfolioOptimisation = () => {
     setPortfolioAllocation(newDict);
   };
 
-  useEffect(() => {
-    rebalancePortfolio();
-  }, [assets])
+  const runSimulation = () => {
+    
+  }
 
   return (
-    <div>
+    <div className={styles["portfolio-optimisation-container"]}>
       <h1>Portfolio Optimizer</h1>
 
       <AssetSelector
@@ -63,7 +72,9 @@ const PortfolioOptimisation = () => {
         </div>
       )}
 
-      <div>Run Simulation</div>
+      <Button variant="contained" onClick={runSimulation}>
+        Run Simulation
+      </Button>
 
     </div>
   )

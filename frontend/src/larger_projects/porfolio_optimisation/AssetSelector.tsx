@@ -38,7 +38,7 @@ const AssetSelector = ({
 
       setTickers(res.data || []);
       setLoading(false);
-    }, 800);
+    }, 500);
   }, []);
 
   return (
