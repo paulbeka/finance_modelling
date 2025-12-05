@@ -1,9 +1,10 @@
-from fastapi import BaseModel
+from pydantic import BaseModel
 
 
 class MarkowitzRequest(BaseModel):
   assets: list[str]
   timeframe: int
+  risk_free_rate: float
 
 
 class MarkowitzResponse(BaseModel):

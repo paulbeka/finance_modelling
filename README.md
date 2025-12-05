@@ -52,3 +52,5 @@ The backend uses FastAPI. Run uvicorn
  - fix the proxy pass for every subdomain /* to point correctly (check EUMS nginx)
  
  - make sure the website displays correctly for mobile
+ - Change the font 
+ 

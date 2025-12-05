@@ -1,10 +1,12 @@
 from fastapi import APIRouter
 
 from ...schemas.markowitz_schema import MarkowitzRequest, MarkowitzResponse
+from ...services.markowitz import simulate_markowitz_optimization
 
-markowitz_router = APIRouter()
+
+router = APIRouter()
 
 
-@markowitz_router.post("/markowitz/optimize")
+@router.post("/optimize")
 def optimize_portfolio(request: MarkowitzRequest) -> MarkowitzResponse:
-  pass
+  return simulate_markowitz_optimization(request.assets, request.timeframe, request.risk_free_rate)
