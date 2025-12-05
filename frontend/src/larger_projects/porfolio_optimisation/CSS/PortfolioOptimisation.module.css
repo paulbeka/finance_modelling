@@ -5,3 +5,15 @@
   max-width: 800px;
   margin: 0 auto;
 }
+
+.asset-slider {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.trash-icon:hover {
+  cursor: pointer;
+}

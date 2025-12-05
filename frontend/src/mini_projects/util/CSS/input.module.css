@@ -1,8 +1,9 @@
 .variable-container {
   display: flex;
   align-items: center;
-  margin-bottom: 1em;
+  margin-block: 0.5em;
   gap: 0.5em;
+  width: 100%;
 }
 
 .variable-label {

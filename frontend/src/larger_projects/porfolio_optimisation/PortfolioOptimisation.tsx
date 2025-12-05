@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import AssetSelector from "./AssetSelector";
 import VariableSlider from "../../mini_projects/util/VariableSlider";
 import { Button } from "@mui/material";
+import { FaRegTrashAlt } from "react-icons/fa";
 import styles from "./CSS/PortfolioOptimisation.module.css";
+
 
 const PortfolioOptimisation = () => {
   const [assets, setAssets] = useState<string[] | undefined>([]);
@@ -16,12 +18,13 @@ const PortfolioOptimisation = () => {
 
       assets.forEach(asset => {
         if (!(asset in updated)) {
-          updated[asset] = 10;
+          updated[asset] = 100;
         }
       });
 
       return updated;
     });
+    rebalancePortfolio();
   }, [assets]);
 
   const rebalancePortfolio = (fixedAsset?: string, fixedValue?: number) => {
@@ -52,6 +55,17 @@ const PortfolioOptimisation = () => {
     });
   };
 
+  const removeAssetFromPortfolio = (asset: string) => {
+    setAssets(prev => {
+      return prev?.filter(val => val !== asset);
+    });
+    setPortfolioAllocation(prev => {
+      delete prev[asset];
+      return prev;
+    });
+    rebalancePortfolio();
+  }
+
   const runSimulation = () => {
     
   }
@@ -66,7 +80,7 @@ const PortfolioOptimisation = () => {
       />
 
       {assets?.map((asset) => 
-        <div>
+        <div className={styles["asset-slider"]}>
           <VariableSlider
             label={asset}
             value={portfolioAllocation[asset]}
@@ -76,6 +90,7 @@ const PortfolioOptimisation = () => {
               rebalancePortfolio(asset, newValue);
             }}
           />
+          <FaRegTrashAlt className={styles["trash-icon"]} onClick={() => removeAssetFromPortfolio(asset)}/>
         </div>
       )}
 
