@@ -1,73 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AssetSelector from "./AssetSelector";
-import VariableSlider from "../../mini_projects/util/VariableSlider";
-import { Button } from "@mui/material";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { Button, Slider, Box, Typography } from "@mui/material";
 import styles from "./CSS/PortfolioOptimisation.module.css";
+import { Mosaic } from "react-loading-indicators";
+import MarkowitzChartDisplay from "./MarkowitzChartDisplay";
+import { MarkowitzResponse } from "./MarkowitzResponse.types";
+import { api } from "../../api/Api";
 
 
 const PortfolioOptimisation = () => {
   const [assets, setAssets] = useState<string[] | undefined>([]);
-  const [portfolioAllocation, setPortfolioAllocation] = useState<{[key: string]: number}>({}); 
+  const [timeframe, setTimeframe] = useState<number>();
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [result, setResult] = useState<MarkowitzResponse>();
   
-  useEffect(() => {
-    if (!assets) return;
-
-    setPortfolioAllocation(prev => {
-      const updated = { ...prev };
-
-      assets.forEach(asset => {
-        if (!(asset in updated)) {
-          updated[asset] = 100;
-        }
-      });
-
-      return updated;
-    });
-    rebalancePortfolio();
-  }, [assets]);
-
-  const rebalancePortfolio = (fixedAsset?: string, fixedValue?: number) => {
-    setPortfolioAllocation(prev => {
-      const updated = {
-        ...prev,
-        ...(fixedAsset ? { [fixedAsset]: fixedValue ?? prev[fixedAsset] ?? 0 } : {})
-      };
-
-      const fixed = fixedAsset ? fixedValue ?? updated[fixedAsset] : 0;
-
-      let total = 0;
-      for (const asset in updated) {
-        if (asset !== fixedAsset) total += updated[asset];
-      }
-
-      const newDict: { [key: string]: number } = {};
-
-      for (const asset in updated) {
-        if (asset === fixedAsset) {
-          newDict[asset] = fixed;
-        } else {
-          newDict[asset] = (updated[asset] / total) * (100 - fixed);
-        }
-      }
-
-      return newDict;
-    });
-  };
-
-  const removeAssetFromPortfolio = (asset: string) => {
-    setAssets(prev => {
-      return prev?.filter(val => val !== asset);
-    });
-    setPortfolioAllocation(prev => {
-      delete prev[asset];
-      return prev;
-    });
-    rebalancePortfolio();
-  }
-
   const runSimulation = () => {
-    
+    setLoading(true);
+    api.post("/markowitz/optimize", {
+      assets, timeframe
+    }).then((res) => {
+      setResult(res.data);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+    .finally(() => {
+      setLoading(false);
+    })
   }
 
   return (
@@ -79,24 +39,30 @@ const PortfolioOptimisation = () => {
         setAssets={setAssets}
       />
 
-      {assets?.map((asset) => 
-        <div className={styles["asset-slider"]}>
-          <VariableSlider
-            label={asset}
-            value={portfolioAllocation[asset]}
-            min={0}
-            max={100}
-            setValue={(newValue: number) => {
-              rebalancePortfolio(asset, newValue);
-            }}
-          />
-          <FaRegTrashAlt className={styles["trash-icon"]} onClick={() => removeAssetFromPortfolio(asset)}/>
-        </div>
-      )}
+      <Box sx={{ width: "auto" }}>
+        <Typography gutterBottom>Timeframe (1-10 years of historical data): </Typography>
+        <Slider
+          aria-label="Timeframe"
+          value={timeframe}
+          onChange={(_, value) => setTimeframe(value)}
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={1}
+          max={10}
+        />
+      </Box>
 
-      <Button variant="contained" onClick={runSimulation}>
+      <Button variant="contained" onClick={() => runSimulation()}>
         Run Simulation
       </Button>
+
+      <div className={styles["results-container"]}>
+        {
+          loading ? <div className={styles["loading-container"]}><Mosaic color="#3f50b5" size="medium" text="" textColor=""/></div> : 
+          result && <MarkowitzChartDisplay data={result} />
+        }
+      </div>
 
     </div>
   )
