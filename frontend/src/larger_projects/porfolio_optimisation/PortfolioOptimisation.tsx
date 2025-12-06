@@ -1,12 +1,20 @@
 import { useState } from "react";
 import AssetSelector from "./AssetSelector";
-import { Button, Slider, Box, Typography } from "@mui/material";
+import { Button, Slider, Box, Typography, Chip } from "@mui/material";
 import styles from "./CSS/PortfolioOptimisation.module.css";
 import { Mosaic } from "react-loading-indicators";
 import MarkowitzChartDisplay from "./MarkowitzChartDisplay";
 import { MarkowitzResponse } from "./MarkowitzResponse.types";
 import VariableSlider from "../../mini_projects/util/VariableSlider";
+import preSelectedAssets from "./data/PreSelectedAssets.json";
 import { api } from "../../api/Api";
+
+
+type PreSelectedAsset = {
+  assets: string[],
+  timeframe: number,
+  name: string
+}
 
 
 const PortfolioOptimisation = () => {
@@ -17,6 +25,11 @@ const PortfolioOptimisation = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
   const [result, setResult] = useState<MarkowitzResponse>();
+
+  const selectPreGrouping = (grouping: PreSelectedAsset) => {
+    setAssets(grouping.assets);
+    setTimeframe(grouping.timeframe);
+  }
   
   const runSimulation = () => {
     setError("");
@@ -41,7 +54,28 @@ const PortfolioOptimisation = () => {
 
   return (
     <div className={styles["portfolio-optimisation-container"]}>
-      <h1>Portfolio Optimizer</h1>
+      <h1>Asset Portfolio Optimizer</h1>
+
+      <h3>Some Pre-Selected Values</h3>
+
+      {preSelectedAssets.map(grouping => (
+        <Box onClick={() => selectPreGrouping(grouping)} className={styles["preselect-option"]} sx={{ gap: 1, alignItems: "center" }}>
+          <Typography variant="subtitle1" fontWeight="bold">
+            {grouping.name}:
+          </Typography>
+
+          {grouping.assets.map(asset => (
+            <Chip 
+              key={asset} 
+              label={asset} 
+              size="small"
+              variant="outlined"
+            />
+          ))}
+        </Box>
+      ))}
+
+      <br />
 
       <AssetSelector
         assets={assets}

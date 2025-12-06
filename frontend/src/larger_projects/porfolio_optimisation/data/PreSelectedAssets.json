@@ -1,0 +1,17 @@
+[
+  {
+    "assets": ["AAPL", "NVDA", "META", "GOOG", "NICE"],
+    "timeframe": 3,
+    "name": "Tech Heavy"
+  },
+  {
+    "assets": ["^GSPC", "^NDX", "^DJI", "^STOXX50E", "^FTSE"],
+    "timeframe": 5,
+    "name": "Major Indices"
+  },
+  {
+    "assets": ["TLT", "IEF", "GLD", "JNJ", "PG", "KO", "PEP"],
+    "timeframe": 7,
+    "name": "Steady Returns"
+  }
+]

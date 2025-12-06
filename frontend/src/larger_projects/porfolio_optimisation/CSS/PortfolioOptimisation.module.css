@@ -20,3 +20,26 @@
   margin-block: 1em;
   justify-content: center;
 }
+
+.preselect-option {
+  padding: 10px 12px;
+  text-align: left;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid gray;
+  transition: background-color 0.25s ease, 
+              box-shadow 0.25s ease, 
+              transform 0.2s ease;
+}
+
+.preselect-option:hover {
+  cursor: pointer;
+  background-color: #ebebeb; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.preselect-option:active {
+  transform: scale(0.98);
+}
