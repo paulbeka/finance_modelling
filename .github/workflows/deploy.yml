@@ -45,7 +45,7 @@ jobs:
           labels: ${{ steps.meta-frontend.outputs.labels }}
           build-args: |
             REACT_APP_BASE_URL=${{ secrets.FRONTEND_API_URL }}
-            REACT_APP_GS_TOKEN=${{ secrets.GA_TOKEN }}
+            REACT_APP_GA_TOKEN=${{ secrets.GA_TOKEN }}
 
       - name: Extract metadata for backend image
         id: meta-backend
