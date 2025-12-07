@@ -16,7 +16,7 @@ RUN npm run build
 
 FROM nginx:stable-alpine
 
-COPY nginx/conf.d/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /usr/share/nginx/html
 
 EXPOSE 80 443

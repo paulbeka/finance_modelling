@@ -10,7 +10,8 @@ class MarkowitzRequest(BaseModel):
 class MarkowitzResponse(BaseModel):
   points: list[dict[str, float]]
   weights: dict[str, float]
-  efficient_frontier: list[list[float]]
+  efficient_frontier_x: list[float]
+  efficient_frontier_y: list[float]
   expected_return: float
   sharpe: float
   volatility: float
