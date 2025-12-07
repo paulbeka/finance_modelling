@@ -26,6 +26,8 @@ const PortfolioOptimisation = () => {
   const [error, setError] = useState<string>();
   const [result, setResult] = useState<MarkowitzResponse>();
 
+  const [beta, setBeta] = useState<number>(1.0);
+
   const selectPreGrouping = (grouping: PreSelectedAsset) => {
     setAssets(grouping.assets);
     setTimeframe(grouping.timeframe);
@@ -97,6 +99,15 @@ const PortfolioOptimisation = () => {
       </Box>
 
       <VariableSlider
+        label={"Beta"}
+        min={0}
+        max={1.2}
+        step={0.01}
+        value={beta}
+        setValue={setBeta}
+      />
+
+      <VariableSlider
         label={"Risk free rate"}
         min={-0.1}
         max={0.2}
@@ -112,7 +123,10 @@ const PortfolioOptimisation = () => {
       <div className={styles["results-container"]}>
         {
           loading ? <div className={styles["loading-container"]}><Mosaic color="#3f50b5" size="medium" text="" textColor=""/></div> : 
-          error ? <p>{error}</p> : result && <MarkowitzChartDisplay data={result} riskFreeRate={risk_free_rate} />
+          error ? <p>{error}</p> : result && 
+          <div>
+            <MarkowitzChartDisplay data={result} riskFreeRate={risk_free_rate} beta={beta} />
+          </div>
         }
       </div>
 
