@@ -6,7 +6,6 @@ ARG REACT_APP_GA_TOKEN
 
 COPY package*.json ./
 RUN npm ci
-
 COPY . .
 
 RUN printf "REACT_APP_BASE_URL=%s\nREACT_APP_GA_TOKEN=%s\n" \
@@ -14,7 +13,12 @@ RUN printf "REACT_APP_BASE_URL=%s\nREACT_APP_GA_TOKEN=%s\n" \
 
 RUN npm run build
 
+
 FROM nginx:stable-alpine
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
+
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
