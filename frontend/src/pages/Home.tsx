@@ -64,7 +64,7 @@ const Home = () => {
     },
     {
       name: "Portfolio Optimisation",
-      desc: "",
+      desc: "A Markowitz portfolio optimiser to find the optimal sharpe ratio portfolio. Play around with the beta to see what returns you can get!",
       link: "/portfolio-optimisation"
     }
   ];

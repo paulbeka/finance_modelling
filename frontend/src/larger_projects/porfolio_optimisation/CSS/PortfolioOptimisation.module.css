@@ -43,3 +43,11 @@
 .preselect-option:active {
   transform: scale(0.98);
 }
+
+.error-container {
+  text-align: center;
+  padding: 5px;
+  background-color: rgb(254, 75, 75);
+  border-radius: 5px;
+  color: white;
+}

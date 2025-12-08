@@ -1,3 +1,9 @@
+## What is this project?
+
+In this project, I've added a few of the most interesting calculations I've come across on my journey to become a quant developer. Since leaving my job at Goldman Sachs, I've been laser focused on learning everything about financial technology & quantitative development. 
+
+The code is deployed on the following url: [https://`www.paulbekaertprojects.com]
+
 ## Instructions - Frontend
 
 In the frontend directory, you can run:
@@ -25,32 +31,23 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Instructions - Backend
 
-The backend uses FastAPI. Run uvicorn
+The backend uses FastAPI. After creating a new Python environment and having run `pip install -r requirements.txt`, run the application using 
+following command: `uvicorn app.main:app`
 
 ## TODO
 
  - Add the dividend rate to the slow binomial calculator
  - consider a black-scholes mini heatmap with PnL
  - LSMC for the Monte-Carlo pricing model for American options (early puts or negative r for calls)
-
- - Finish the Markowitz Portfolio Optimization page
  - Create a stock protfolio MC simulator 
-
- - Add the testing phase of the github action
- - fix the proxy pass for every subdomain /* to point correctly (check EUMS nginx)
  
  - make sure the website displays correctly for mobile
  - Change the font 
+ - Create little explainer boxes to talk about the math and motivation for each project
+
+ - build end-to-end frontend tests
+ - Add the testing phase of the github action
  

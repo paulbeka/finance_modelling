@@ -1,0 +1,43 @@
+.beta-returns-container {
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  background: #83b6d4;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.summary-stats-container {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.summary-stats-container div {
+  text-align: center;
+  flex: 1;
+  background: #c8dcf0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.weights-container {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.optimal-asset-weight-container {
+  background: #e1ecf4;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  text-align: center;
+  width: 20%;
+}

@@ -8,15 +8,20 @@ from ..schemas.markowitz_schema import MarkowitzResponse
 
 
 N_PORTFOLIOS = 500
+N_TRADING_DAYS = 525
 
 
 def simulate_markowitz_optimization(assets: list[str], timeframe: float, r: float):
     asset_prices = get_historical_tick_data(assets, timeframe)
 
     returns = asset_prices.pct_change().dropna()
+    returns = returns.loc[:, returns.std() > 0]
+    if returns.shape[1] == 0:
+        raise ValueError("All assets have zero variance! Please retry with different assets.")
+    
     mean_returns = returns.mean().values
-    mean_returns = (1 + mean_returns)**252 - 1  # annualise
-    cov_matrix = returns.cov().values * 252
+    mean_returns = (1 + mean_returns)**N_TRADING_DAYS - 1  # annualise
+    cov_matrix = returns.cov().values * N_TRADING_DAYS
 
     points = []
     weights_list = []

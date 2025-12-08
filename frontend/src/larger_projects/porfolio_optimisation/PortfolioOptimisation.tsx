@@ -123,7 +123,10 @@ const PortfolioOptimisation = () => {
       <div className={styles["results-container"]}>
         {
           loading ? <div className={styles["loading-container"]}><Mosaic color="#3f50b5" size="medium" text="" textColor=""/></div> : 
-          error ? <p>{error}</p> : result && 
+          error ? 
+            <div className={styles["error-container"]}>
+              <p>{error}</p>
+            </div> : result && 
           <div>
             <MarkowitzChartDisplay data={result} riskFreeRate={risk_free_rate} beta={beta} />
           </div>
