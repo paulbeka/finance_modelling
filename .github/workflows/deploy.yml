@@ -1,4 +1,4 @@
-name: Build and Deploy with GHCR
+name: Build, Test and Deploy with GHCR
 on:
   push:
     branches: ["main"]
@@ -9,17 +9,42 @@ env:
   BACKEND_IMAGE_NAME: ${{ github.repository_owner }}/finance-backend
 
 jobs:
-  build-and-push:
+  test-frontend:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
 
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: npm test -- --watchAll=false
+
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: pip install -r requirements.txt
+
+      - name: Run backend tests
+        working-directory: ./backend
+        run: pytest --maxfail=1 --disable-warnings -q
+
+  build-and-push:
+    needs: [test-frontend, test-backend]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
       id-token: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -35,7 +60,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
 
       - name: Build and push frontend image
-        id: push-frontend
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
@@ -54,7 +78,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
 
       - name: Build and push backend image
-        id: push-backend
         uses: docker/build-push-action@v5
         with:
           context: ./backend
@@ -66,7 +89,6 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-
     steps:
       - name: Add server to known_hosts
         run: |
