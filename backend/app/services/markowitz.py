@@ -12,51 +12,51 @@ N_TRADING_DAYS = 525
 
 
 def simulate_markowitz_optimization(assets: list[str], timeframe: float, r: float):
-    asset_prices = get_historical_tick_data(assets, timeframe)
+  asset_prices = get_historical_tick_data(assets, timeframe)
 
-    returns = asset_prices.pct_change().dropna()
-    returns = returns.loc[:, returns.std() > 0]
-    if returns.shape[1] == 0:
-        raise ValueError("All assets have zero variance! Please retry with different assets.")
-    
-    mean_returns = returns.mean().values
-    mean_returns = (1 + mean_returns)**N_TRADING_DAYS - 1  # annualise
-    cov_matrix = returns.cov().values * N_TRADING_DAYS
+  returns = asset_prices.pct_change().dropna()
+  returns = returns.loc[:, returns.std() > 0]
+  if returns.shape[1] == 0:
+    raise ValueError("All assets have zero variance! Please retry with different assets.")
+  
+  mean_returns = returns.mean().values
+  mean_returns = (1 + mean_returns)**N_TRADING_DAYS - 1  # annualise
+  cov_matrix = returns.cov().values * N_TRADING_DAYS
 
-    points = []
-    weights_list = []
+  points = []
+  weights_list = []
 
-    for _ in range(N_PORTFOLIOS):
-        w = rand_weights(len(assets))
-        mu = np.dot(w, mean_returns)
-        sigma = np.sqrt(w @ cov_matrix @ w.T)
-        points.append([sigma, mu])
-        weights_list.append(w)
+  for _ in range(N_PORTFOLIOS):
+    w = rand_weights(len(assets))
+    mu = np.dot(w, mean_returns)
+    sigma = np.sqrt(w @ cov_matrix @ w.T)
+    points.append([sigma, mu])
+    weights_list.append(w)
 
-    efficient_frontier_x, efficient_frontier_y = get_efficient_frontier(points)
+  efficient_frontier_x, efficient_frontier_y = get_efficient_frontier(points)
 
-    sharpe_ratios = [(p[1] - r) / p[0] for p in points]
-    best_idx = int(np.argmax(sharpe_ratios))
+  sharpe_ratios = [(p[1] - r) / p[0] for p in points]
+  best_idx = int(np.argmax(sharpe_ratios))
 
-    best_point = points[best_idx]
-    best_weights = weights_list[best_idx]
+  best_point = points[best_idx]
+  best_weights = weights_list[best_idx]
 
-    weight_dict = {asset: float(best_weights[i]) for i, asset in enumerate(assets)}
+  weight_dict = {asset: float(best_weights[i]) for i, asset in enumerate(assets)}
 
-    return MarkowitzResponse(
-        points=format_points_for_mui(points),
-        weights=weight_dict,
-        efficient_frontier_x=efficient_frontier_x,
-        efficient_frontier_y=efficient_frontier_y,
-        expected_return=float(best_point[1]),
-        sharpe=float(sharpe_ratios[best_idx]),
-        volatility=float(best_point[0])
-    )
+  return MarkowitzResponse(
+    points=format_points_for_mui(points),
+    weights=weight_dict,
+    efficient_frontier_x=efficient_frontier_x,
+    efficient_frontier_y=efficient_frontier_y,
+    expected_return=float(best_point[1]),
+    sharpe=float(sharpe_ratios[best_idx]),
+    volatility=float(best_point[0])
+  )
 
 
 def rand_weights(n):
-    k = np.random.rand(n)
-    return k / sum(k)
+  k = np.random.rand(n)
+  return k / sum(k)
 
 
 def get_efficient_frontier(points: list[list[float]]):
@@ -95,7 +95,7 @@ def get_efficient_frontier(points: list[list[float]]):
 
 
 def format_points_for_mui(points: list[list[float]]) -> list[dict[str, float]]:
-    return [
-        {"x": float(sigma), "y": float(mu)}
-        for sigma, mu in points
-    ]
+  return [
+    {"x": float(sigma), "y": float(mu)}
+    for sigma, mu in points
+  ]

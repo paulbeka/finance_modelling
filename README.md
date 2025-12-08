@@ -2,7 +2,7 @@
 
 In this project, I've added a few of the most interesting calculations I've come across on my journey to become a quant developer. Since leaving my job at Goldman Sachs, I've been laser focused on learning everything about financial technology & quantitative development. 
 
-The code is deployed on the following url: [https://`www.paulbekaertprojects.com]
+The code is deployed on the following url: [https://paulbekaertprojects.com/]
 
 ## Instructions - Frontend
 

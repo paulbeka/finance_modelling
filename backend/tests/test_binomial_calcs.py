@@ -164,5 +164,4 @@ def test_check_american_higher_for_call_with_negative_real_rates():
   )["binomial_price"]
 
   assert european_price < american_price
-
-# test american with risk free low is higher 
+  
