@@ -8,12 +8,13 @@
     "@fontsource/roboto": "^5.2.8",
     "@mui/material": "^7.3.5",
     "@mui/x-charts": "^8.21.0",
+    "@mui/x-charts-vendor": "^8.21.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "axios": "^1.13.2",
+    "axios": "1.6.8",
     "mathjs": "^15.1.0",
     "mui": "^0.0.1",
     "react": "^19.2.0",
@@ -31,6 +32,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs",
+      "^@mui/x-charts-vendor/(.*)$": "<rootDir>/node_modules/@mui/x-charts-vendor/$1"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -54,5 +61,8 @@
     "@types/node": "^20.19.25",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7"
+  },
+  "overrides": {
+    "axios": "1.6.8"
   }
 }
