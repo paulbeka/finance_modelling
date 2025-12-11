@@ -2,7 +2,9 @@
 
 In this project, I've added a few of the most interesting calculations I've come across on my journey to become a quant developer. Since leaving my job at Goldman Sachs, I've been laser focused on learning everything about financial technology & quantitative development. 
 
-The code is deployed on the following url: [https://paulbekaertprojects.com/]
+The code is deployed on the following url: [https://paulbekaertprojects.com/](https://paulbekaertprojects.com/)
+
+The app is built with a react frontend powered by Vite, and a backend powered by FastAPI.
 
 ## Instructions - Frontend
 
@@ -11,7 +13,7 @@ In the frontend directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
@@ -20,16 +22,6 @@ You will also see any lint errors in the console.
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 
 ## Instructions - Backend

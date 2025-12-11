@@ -1,15 +1,15 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
-ARG REACT_APP_BASE_URL
-ARG REACT_APP_GA_TOKEN
+ARG VITE_BASE_URL
+ARG VITE_GA_TOKEN
 
 COPY package*.json ./
 RUN npm ci
 COPY . .
 
-RUN printf "REACT_APP_BASE_URL=%s\nREACT_APP_GA_TOKEN=%s\n" \
-    "$REACT_APP_BASE_URL" "$REACT_APP_GA_TOKEN" > .env
+RUN printf "VITE_BASE_URL=%s\nVITE_GA_TOKEN=%s\n" \
+    "$VITE_BASE_URL" "$VITE_GA_TOKEN" > .env
 
 RUN npm run build
 
