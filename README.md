@@ -50,4 +50,4 @@ following command: `uvicorn app.main:app`
 
  - build end-to-end frontend tests
  - Add the testing phase of the github action
- 
+ - update to Vite instead of CRA

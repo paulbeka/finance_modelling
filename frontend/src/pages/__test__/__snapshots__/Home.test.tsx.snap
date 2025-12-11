@@ -1,4 +1,181 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Home Page > renders snapshot as expected 1`] = `
+<DocumentFragment>
+  <div>
+    <h2>
+      Mini Calculators
+    </h2>
+    <div
+      class="_projectList_43f183"
+    >
+      <div
+        class="_projectWrapper_43f183"
+      >
+        <div
+          class="_projectCard_43f183"
+        >
+          <div>
+            <h5>
+              Black Scholes
+            </h5>
+            <p>
+              Options pricing using the Black-Scholes–Merton model.
+            </p>
+          </div>
+        </div>
+        <div
+          class="_expandPanel_43f183"
+          style="height: 0px;"
+        />
+      </div>
+      <div
+        class="_projectWrapper_43f183"
+      >
+        <div
+          class="_projectCard_43f183"
+        >
+          <div>
+            <h5>
+              European Option Binomial Model Calculator
+            </h5>
+            <p>
+              Binomial pricing model for pricing assets following a European Option style
+            </p>
+          </div>
+        </div>
+        <div
+          class="_expandPanel_43f183"
+          style="height: 0px;"
+        />
+      </div>
+      <div
+        class="_projectWrapper_43f183"
+      >
+        <div
+          class="_projectCard_43f183"
+        >
+          <div>
+            <h5>
+              Fixed-Income Yield Solver
+            </h5>
+            <p>
+              Calculate yield to maturity for fixed-income securities.
+            </p>
+          </div>
+        </div>
+        <div
+          class="_expandPanel_43f183"
+          style="height: 0px;"
+        />
+      </div>
+    </div>
+    <h2>
+      Larger Projects
+    </h2>
+    <div
+      class="_projectList_43f183"
+    >
+      <div
+        class="_projectWrapper_43f183"
+      >
+        <a
+          class="_projectCard_43f183"
+          href="/project/monte-carlo"
+        >
+          <div>
+            <h5>
+              Monte-Carlo Option Price Simulation
+            </h5>
+            <p>
+              Prices options using a Monte-Carlo simulation.
+            </p>
+          </div>
+          <svg
+            class="_rightArrow_43f183"
+            fill="currentColor"
+            height="40"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 16 16"
+            width="40"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="_projectWrapper_43f183"
+      >
+        <a
+          class="_projectCard_43f183"
+          href="/project/binomial"
+        >
+          <div>
+            <h5>
+              Binomial Pricing Simulation (Fast)
+            </h5>
+            <p>
+              A binomial calculator for pricing American, European, or Asian options.
+            </p>
+          </div>
+          <svg
+            class="_rightArrow_43f183"
+            fill="currentColor"
+            height="40"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 16 16"
+            width="40"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="_projectWrapper_43f183"
+      >
+        <a
+          class="_projectCard_43f183"
+          href="/project/portfolio-optimisation"
+        >
+          <div>
+            <h5>
+              Portfolio Optimisation
+            </h5>
+            <p>
+              A Markowitz portfolio optimiser to find the optimal sharpe ratio portfolio. Play around with the beta to see what returns you can get!
+            </p>
+          </div>
+          <svg
+            class="_rightArrow_43f183"
+            fill="currentColor"
+            height="40"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 16 16"
+            width="40"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
 exports[`Home Page renders snapshot as expected 1`] = `
 <DocumentFragment>
