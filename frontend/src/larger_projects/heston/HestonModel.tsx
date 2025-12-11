@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { HestonModelParams } from "./HestonModelParams.types"
+import { HestonModelParams, HestonModelResponse } from "./HestonModel.types"
+import { api } from "../../api/Api";
+import { ThreeDot } from "react-loading-indicators";
 import VariableSlider from "../../mini_projects/util/VariableSlider";
+import Button from '@mui/material/Button';
+import HestonModelResult from "./HestonModelResult";
+import styles from "./CSS/HestonModel.module.css";
 
 
 const HestonModel = () => {
@@ -18,102 +23,131 @@ const HestonModel = () => {
     optionType: "call"
   });
 
+  const [hestonResponse, setHestonResponse] = useState<HestonModelResponse>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const runSimulation = () => {
+    setLoading(true);
+    api.post("/heston/heston-simulation", hestonParams)
+    .then((res) => {
+      setHestonResponse(res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      setLoading(false);
+    })
+
+  }
+
   return (
-    <div>
+    <div className={styles["heston-container"]}>
       <h1>Heston Model Option Calculator</h1>
-      <div>
 
-        <VariableSlider
-          label="Spot Price"
-          min={0}
-          max={200}
-          step={1}
-          value={hestonParams.S}
-          setValue={(value: number) => setHestonParams({ ...hestonParams, S: value })}
-        />
+      <h4>Option Parameters</h4>
 
-        <VariableSlider
-          label="Strike Price"
-          min={0}
-          max={200}
-          step={1}
-          value={hestonParams.K}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, K: value })}
-        />
+      <VariableSlider
+        label="Spot Price"
+        min={0}
+        max={200}
+        step={1}
+        value={hestonParams.S}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, S: value })}
+      />
 
-        <VariableSlider
-          label="Time to Maturity (years)"
-          min={0.01}
-          max={5}
-          step={0.01}
-          value={hestonParams.T}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, T: value })}
-        />
+      <VariableSlider
+        label="Strike Price"
+        min={0}
+        max={200}
+        step={1}
+        value={hestonParams.K}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, K: value })}
+      />
 
-        <VariableSlider
-          label="Risk-free Rate"
-          min={0}
-          max={0.2}
-          step={0.001}
-          value={hestonParams.r}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, r: value })}
-        />
+      <VariableSlider
+        label="Time to Maturity (years)"
+        min={0.01}
+        max={5}
+        step={0.01}
+        value={hestonParams.T}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, T: value })}
+      />
 
-        <VariableSlider
-          label="Dividend Yield"
-          min={0}
-          max={0.2}
-          step={0.001}
-          value={hestonParams.q}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, q: value })}
-        />
+      <VariableSlider
+        label="Risk-free Rate"
+        min={0}
+        max={0.2}
+        step={0.001}
+        value={hestonParams.r}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, r: value })}
+      />
 
-        <VariableSlider
-          label="Initial Variance"
-          min={0.01}
-          max={1}
-          step={0.01}
-          value={hestonParams.v}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, v: value })}
-        />
+      <VariableSlider
+        label="Dividend Yield"
+        min={0}
+        max={0.2}
+        step={0.001}
+        value={hestonParams.q}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, q: value })}
+      />
 
-        <VariableSlider
-          label="Mean Reversion Rate"
-          min={0}
-          max={5}
-          step={0.1}
-          value={hestonParams.kappa}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, kappa: value })}
-        />
+      <h4>Heston Model Parameters</h4>
+      
+      <VariableSlider
+        label="Initial Variance"
+        min={0.01}
+        max={1}
+        step={0.01}
+        value={hestonParams.v}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, v: value })}
+      />
 
-        <VariableSlider
-          label="Long-term Variance"
-          min={0.01}
-          max={1}
-          step={0.01}
-          value={hestonParams.theta}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, theta: value })}
-        />
+      <VariableSlider
+        label="Mean Reversion Rate"
+        min={0}
+        max={5}
+        step={0.1}
+        value={hestonParams.kappa}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, kappa: value })}
+      />
 
-        <VariableSlider
-          label="Volatility of variance"
-          min={0.01}
-          max={1}
-          step={0.01}
-          value={hestonParams.sigma}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, sigma: value })}
-        />
+      <VariableSlider
+        label="Long-term Variance"
+        min={0.01}
+        max={1}
+        step={0.01}
+        value={hestonParams.theta}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, theta: value })}
+      />
 
-        <VariableSlider
-          label="Correlation"
-          min={-1}
-          max={1}
-          step={0.01}
-          value={hestonParams.rho}
-          onChange={(value: number) => setHestonParams({ ...hestonParams, rho: value })}
-        />
+      <VariableSlider
+        label="Volatility of variance"
+        min={0.01}
+        max={1}
+        step={0.01}
+        value={hestonParams.sigma}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, sigma: value })}
+      />
 
+      <VariableSlider
+        label="Correlation"
+        min={-1}
+        max={1}
+        step={0.01}
+        value={hestonParams.rho}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, rho: value })}
+      />
+
+      <Button variant="contained" onClick={runSimulation}>
+        Run Simulation
+      </Button>
+
+      <div className={styles["binomial-result-container"]}>
+        {loading ? <ThreeDot color="white" size="medium" text="" textColor="" /> : 
+        hestonResponse && <HestonModelResult data={hestonResponse} />} 
       </div>
+
     </div>
   );
 }

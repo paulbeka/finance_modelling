@@ -13,3 +13,7 @@ export type HestonModelParams = {
   rho: number;
   optionType: OptionType;
 }
+
+export type HestonModelResponse = {
+  
+}

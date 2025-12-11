@@ -67,11 +67,11 @@ const Home = () => {
       desc: "A Markowitz portfolio optimiser to find the optimal sharpe ratio portfolio. Play around with the beta to see what returns you can get!",
       link: "/portfolio-optimisation"
     },
-    {
-      name: "Heston Model Option Calculator",
-      desc: "An option pricing model that accounts for stochastic volatility and outputs a price grid.",
-      link: "/heston-model"
-    }
+    // {
+    //   name: "Heston Model Option Calculator",
+    //   desc: "An option pricing model that accounts for stochastic volatility and outputs a price grid.",
+    //   link: "/heston-model"
+    // }
   ];
 
   const toggle = (name: string | null) => {
