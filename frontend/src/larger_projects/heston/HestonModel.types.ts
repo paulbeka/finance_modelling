@@ -1,17 +1,17 @@
 import { OptionType } from "../../mini_projects/util/common_types.types";
 
 export type HestonModelParams = {
-  S: number;
-  K: number
-  T: number;
-  r: number;
-  q: number;
-  v: number;
+  spot: number;
+  strike: number
+  time: number;
+  risk_free_rate: number;
+  dividends: number;
+  initial_variance: number;
   kappa: number;
   theta: number;
   sigma: number;
   rho: number;
-  optionType: OptionType;
+  option_type: OptionType;
 }
 
 export type HestonModelResponse = {

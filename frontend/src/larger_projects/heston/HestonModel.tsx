@@ -10,17 +10,17 @@ import styles from "./CSS/HestonModel.module.css";
 
 const HestonModel = () => {
   const [hestonParams, setHestonParams] = useState<HestonModelParams>({
-    S: 100,
-    K: 110,
-    T: 1,
-    r: 0.05,
-    q: 0,
-    v: 0.04,
+    spot: 100,
+    strike: 110,
+    time: 1,
+    risk_free_rate: 0.05,
+    dividends: 0,
+    initial_variance: 0.04,
     kappa: 0,
     theta: 0,
     sigma: 0,
     rho: 0,
-    optionType: "call"
+    option_type: "call"
   });
 
   const [hestonResponse, setHestonResponse] = useState<HestonModelResponse>();
@@ -52,8 +52,8 @@ const HestonModel = () => {
         min={0}
         max={200}
         step={1}
-        value={hestonParams.S}
-        setValue={(value: number) => setHestonParams({ ...hestonParams, S: value })}
+        value={hestonParams.spot}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, spot: value })}
       />
 
       <VariableSlider
@@ -61,8 +61,8 @@ const HestonModel = () => {
         min={0}
         max={200}
         step={1}
-        value={hestonParams.K}
-        setValue={(value: number) => setHestonParams({ ...hestonParams, K: value })}
+        value={hestonParams.strike}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, strike: value })}
       />
 
       <VariableSlider
@@ -70,8 +70,8 @@ const HestonModel = () => {
         min={0.01}
         max={5}
         step={0.01}
-        value={hestonParams.T}
-        setValue={(value: number) => setHestonParams({ ...hestonParams, T: value })}
+        value={hestonParams.time}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, time: value })}
       />
 
       <VariableSlider
@@ -79,8 +79,8 @@ const HestonModel = () => {
         min={0}
         max={0.2}
         step={0.001}
-        value={hestonParams.r}
-        setValue={(value: number) => setHestonParams({ ...hestonParams, r: value })}
+        value={hestonParams.risk_free_rate}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, risk_free_rate: value })}
       />
 
       <VariableSlider
@@ -88,8 +88,8 @@ const HestonModel = () => {
         min={0}
         max={0.2}
         step={0.001}
-        value={hestonParams.q}
-        setValue={(value: number) => setHestonParams({ ...hestonParams, q: value })}
+        value={hestonParams.dividends}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, dividends: value })}
       />
 
       <h4>Heston Model Parameters</h4>
@@ -99,8 +99,8 @@ const HestonModel = () => {
         min={0.01}
         max={1}
         step={0.01}
-        value={hestonParams.v}
-        setValue={(value: number) => setHestonParams({ ...hestonParams, v: value })}
+        value={hestonParams.initial_variance}
+        setValue={(value: number) => setHestonParams({ ...hestonParams, initial_variance: value })}
       />
 
       <VariableSlider
