@@ -15,11 +15,11 @@ const HestonModel = () => {
     time: 1,
     risk_free_rate: 0.05,
     dividends: 0,
-    initial_variance: 0.04,
-    kappa: 0,
-    theta: 0,
-    sigma: 0,
-    rho: 0,
+    initial_variance: 0.25,
+    kappa: 3,
+    theta: 0.2,
+    sigma: 0.6,
+    rho: 0.7,
     option_type: "call"
   });
 
