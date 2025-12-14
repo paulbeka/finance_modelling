@@ -21,6 +21,14 @@ def simulate_heston(S: float, K: float, T: float, r: float, q: float, v: float,
     prices[i] = prices[i-1] * np.exp((r - q - 0.5 * prev_v) * dt + np.sqrt(prev_v * dt) * Z[i,:,0])
     variances[i] = np.abs(prev_v + kappa*(theta - prev_v) * dt + sigma * np.sqrt(prev_v * dt) * Z[i,:,1])  
     
+  for i in range(N_SIMULATIONS):
+    if option_type == "call":
+      prices[-1, i] = np.maximum(prices[-1, i] - K, 0)
+    else:
+      prices[-1, i] = np.maximum(K - prices[-1, i], 0)
+
+  prices[-1] *= np.exp(-r * T)
+  
   return { 
     "prices": prices.tolist(), 
     "volatility": variances.tolist() 

@@ -18,6 +18,7 @@ const AssetSelector = ({
   const [tickers, setTickers] = useState<YahooTicker[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState("");
 
   let timer: NodeJS.Timeout | null = null;
 
@@ -51,10 +52,15 @@ const AssetSelector = ({
         inputValue={inputValue}
         options={tickers}
         getOptionLabel={(option: YahooTicker) =>
-          `${option.symbol} — ${option.shortname ?? "No name"} (${option.exchDisp ?? ""})`
+          `${option.symbol} : ${option.shortname ?? "No name"} (${option.exchDisp ?? ""})`
         }
         onChange={(_, value) => {
           if (value) {
+            if (assets && assets.length >= 10) {
+              setError("Sorry, a maximum of 10 assets can be selected.");
+              return;
+            }
+            setError("");
             setAssets((prev) =>
               prev ? [...prev, value.symbol] : [value.symbol]
             );
@@ -83,6 +89,12 @@ const AssetSelector = ({
           />
         )}
       />
+
+      {error ? <div style={{
+        color: "red",
+      }}>
+        <span>{error}</span>
+      </div> : <></>}
 
       <Box mt={2} sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
         {assets?.map((symbol) => (
