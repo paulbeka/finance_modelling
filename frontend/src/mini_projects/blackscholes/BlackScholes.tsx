@@ -71,7 +71,7 @@ const BlackScholesModule = () => {
       <VariableSlider 
         label="Risk-Free Rate"
         value={rate}
-        min={0}
+        min={-0.1}
         max={0.2}
         step={0.001}
         setValue={setRate}
