@@ -2,9 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BlackScholesModule from "../mini_projects/blackscholes/BlackScholes";
 import BinomialModule from "../mini_projects/binomial/BinomialModel";
-import style from "./CSS/home.module.css";
 import FixedIncomeYieldSolver from "../mini_projects/fi_yield_solver/FixedIncomeYieldSolver";
+import style from "./CSS/home.module.css";
 import { BsArrowRightShort } from "react-icons/bs";
+import largerProjects from "./data/projects.json";
 
 const ExpandPanel = ({ isOpen, children }: any) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -51,29 +52,6 @@ const Home = () => {
     }
   ];
 
-  const largerProjects = [
-    { 
-      name: "Monte-Carlo Option Price Simulation", 
-      desc: "Prices options using a Monte-Carlo simulation.", 
-      link: "/monte-carlo" 
-    },
-    {
-      name: "Binomial Pricing Simulation (Fast)",
-      desc: "A binomial calculator for pricing American, European, or Asian options.",
-      link: "/binomial"
-    },
-    {
-      name: "Portfolio Optimisation",
-      desc: "A Markowitz portfolio optimiser to find the optimal sharpe ratio portfolio. Play around with the beta to see what returns you can get!",
-      link: "/portfolio-optimisation"
-    },
-    {
-      name: "Heston Model Option Calculator",
-      desc: "An option pricing model that accounts for stochastic volatility and outputs a price grid.",
-      link: "/heston-model"
-    }
-  ];
-
   const toggle = (name: string | null) => {
     setOpenProject((prev) => (prev === name ? null : name));
   };
@@ -86,6 +64,7 @@ const Home = () => {
         {miniProjects.map((proj) => (
           <div key={proj.name} className={style.projectWrapper}>
             <div
+              data-testid="mini-project-card"
               className={style.projectCard}
               onClick={() => toggle(proj.name)}
             >
@@ -96,7 +75,7 @@ const Home = () => {
             </div>
 
             <ExpandPanel isOpen={openProject === proj.name}>
-              <div className={style.expandContent}>{proj.component}</div>
+              <div className={style.expandContent} data-testid="expanded-content">{proj.component}</div>
             </ExpandPanel>
           </div>
         ))}
