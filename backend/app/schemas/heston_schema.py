@@ -15,4 +15,5 @@ class HestonInput(BaseModel):
 
 class HestonOutput(BaseModel):
   prices: list[list[float]]
-  volatility: list[list[float]]
+  variances: list[list[float]]
+  final_option_price: float

@@ -145,7 +145,7 @@ const HestonModel = () => {
 
       <div className={styles["binomial-result-container"]}>
         {loading ? <ThreeDot color="white" size="medium" text="" textColor="" /> : 
-        hestonResponse && <HestonModelResult data={hestonResponse} />} 
+        hestonResponse && <HestonModelResult {...hestonResponse} />} 
       </div>
 
     </div>

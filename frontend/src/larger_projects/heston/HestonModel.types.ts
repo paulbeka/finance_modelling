@@ -16,5 +16,6 @@ export type HestonModelParams = {
 
 export type HestonModelResponse = {
   prices: number[][];
-  volatility: number[][];
+  variances: number[][];
+  final_option_price: number;
 }

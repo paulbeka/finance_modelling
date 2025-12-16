@@ -1,35 +1,50 @@
 import numpy as np
 
-def simulate_heston(S: float, K: float, T: float, r: float, q: float, v: float, 
-                    kappa: float, theta: float, sigma: float, rho: float, option_type: str):
+N_RET_PATHS = 20
 
-  N_STEPS = 252
-  N_SIMULATIONS = 10
-  theta **= 2
-  v **= 2
+def simulate_heston(
+    S: float, K: float, T: float, r: float, q: float, v: float,
+    kappa: float, theta: float, sigma: float, rho: float, option_type: str
+):
+	N_STEPS = 252
+	N_SIMULATIONS = 5000
 
-  dt = T / N_STEPS
-  mu = np.array([0, 0])
-  cov = np.array([[1, rho], [rho, 1]])
+	dt = T / N_STEPS
+	mu = np.array([0.0, 0.0])
+	cov = np.array([[1.0, rho], [rho, 1.0]])
 
-  prices = np.full(shape=(N_STEPS, N_SIMULATIONS), fill_value=S)
-  variances = np.full((N_STEPS, N_SIMULATIONS), fill_value=v)
+	prices = np.full((N_STEPS, N_SIMULATIONS), S, dtype=float)
+	variances = np.full((N_STEPS, N_SIMULATIONS), v, dtype=float)
 
-  Z = np.random.multivariate_normal(mu, cov, [N_STEPS, N_SIMULATIONS])
-  for i in range(1, N_STEPS):
-    prev_v = np.maximum(variances[i-1], 0.0) # Avoid abs() to reduce bias 
-    prices[i] = prices[i-1] * np.exp((r - q - 0.5 * prev_v) * dt + np.sqrt(prev_v * dt) * Z[i,:,0])
-    variances[i] = np.abs(prev_v + kappa*(theta - prev_v) * dt + sigma * np.sqrt(prev_v * dt) * Z[i,:,1])  
-    
-  for i in range(N_SIMULATIONS):
-    if option_type == "call":
-      prices[-1, i] = np.maximum(prices[-1, i] - K, 0)
-    else:
-      prices[-1, i] = np.maximum(K - prices[-1, i], 0)
+	Z = np.random.multivariate_normal(mu, cov, size=(N_STEPS, N_SIMULATIONS))
 
-  prices[-1] *= np.exp(-r * T)
-  
-  return { 
-    "prices": prices.tolist(), 
-    "volatility": variances.tolist() 
-  }
+	for i in range(1, N_STEPS):
+		v_prev = variances[i - 1]
+		v_pos = np.maximum(v_prev, 0.0)
+
+		prices[i] = prices[i - 1] * np.exp(
+			(r - q - 0.5 * v_pos) * dt + np.sqrt(v_pos * dt) * Z[i, :, 0]
+		)
+
+		variances[i] = v_prev + kappa * (theta - v_pos) * dt + sigma * np.sqrt(v_pos * dt) * Z[i, :, 1]
+
+	ST = prices[-1]
+	if option_type == "call":
+		payoffs = np.maximum(ST - K, 0.0)
+	else:
+		payoffs = np.maximum(K - ST, 0.0)
+
+	discounted_payoffs = np.exp(-r * T) * payoffs
+	option_price = float(np.mean(discounted_payoffs))
+
+	m = min(N_RET_PATHS, N_SIMULATIONS)
+	idx = np.random.choice(N_SIMULATIONS, size=m, replace=False)
+
+	selected_prices = prices[:, idx]
+	selected_variances = variances[:, idx]
+
+	return {
+		"prices": selected_prices.T.tolist(),
+		"variances": selected_variances.T.tolist(),
+		"final_option_price": option_price
+	}

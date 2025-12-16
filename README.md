@@ -36,7 +36,6 @@ following command: `uvicorn app.main:app`
  - LSMC for the Monte-Carlo pricing model for American options (early puts or negative r for calls)
  - Create a stock protfolio MC simulator 
  
- - make sure the website displays correctly for mobile
  - Change the font 
  - Create little explainer boxes to talk about the math and motivation for each project
 

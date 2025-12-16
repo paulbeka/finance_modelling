@@ -14,3 +14,4 @@ There is a testing pipeline, but a lot to do here.
 
  - Add more tests
  - finish the README for all the large projects and mini project global README
+ - Ensure mobile works across the board
