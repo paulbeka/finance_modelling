@@ -6,6 +6,7 @@ import FixedIncomeYieldSolver from "../mini_projects/fi_yield_solver/FixedIncome
 import style from "./CSS/home.module.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import largerProjects from "./data/projects.json";
+import { isMobile } from "react-device-detect";
 
 const ExpandPanel = ({ isOpen, children }: any) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -57,7 +58,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className={isMobile? style.homeContainerMobile : ""}>
       <h2>Mini Calculators</h2>
 
       <div className={style.projectList}>

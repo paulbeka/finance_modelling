@@ -7,3 +7,13 @@
   justify-content: space-between;
   height: 100vh;
 }
+
+.mobile-base-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}

@@ -11,7 +11,6 @@
 .nav-content {
   display: flex;
   align-items: center;
-  display: flex;
   max-width: 1200px;
   height: 60px;
   align-items: center;
@@ -42,4 +41,16 @@
 
 .nav-item-container:hover {
   color: #003a78;
+}
+
+
+.mobile-nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding-left: 1em;
 }
