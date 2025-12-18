@@ -1,6 +1,8 @@
 import Plot from "react-plotly.js";
 import { HestonModelResponse } from "./HestonModel.types";
 import type { PlotData } from "plotly.js";
+import styles from "./CSS/HestonModelResult.module.css";
+
 
 const HestonModelResult = (data: HestonModelResponse) => {
   const { prices, variances, final_option_price } = data;
@@ -29,8 +31,8 @@ const HestonModelResult = (data: HestonModelResponse) => {
 
   return (
     <div style={{ width: "100%" }}>
-      <div>
-        Final Option price: {final_option_price.toFixed(2)}
+      <div className={styles["heston-result-container"]}>
+        {<p style={{ fontWeight: "bold" }}>${final_option_price.toFixed(2)}</p>}
       </div>
       <Plot
         data={priceTraces}

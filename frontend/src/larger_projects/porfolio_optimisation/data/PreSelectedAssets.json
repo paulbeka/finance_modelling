@@ -1,6 +1,6 @@
 [
   {
-    "assets": ["AAPL", "NVDA", "META", "GOOG", "NICE"],
+    "assets": ["AAPL", "NVDA", "META", "GOOG", "AMZN", "MSFT"],
     "timeframe": 3,
     "name": "Tech Heavy"
   },
