@@ -4,14 +4,29 @@
   overflow: wrap;
   gap: 10px;
   justify-content: space-between;
+
+  .option-greek-container {
+    text-align: center;
+    background: rgb(200, 220, 240);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    flex: 1 1 100px;
+    margin-top: 10px;
+  }
 }
 
-.option-greek-container {
-  text-align: center;
-  background: rgb(200, 220, 240);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 10px;
-  flex: 1 1 100px;
-  margin-top: 10px;
+.mobile-option-greeks-container {
+  display: flex;
+  flex-direction: column;
+
+  .option-greek-container {
+    text-align: center;
+    background: rgb(200, 220, 240);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    flex: 1 1;
+    padding: 10px;
+    margin-top: 10px;
+  }
 }

@@ -87,7 +87,7 @@ const Home = () => {
         {largerProjects.map((proj) => (
           <div key={proj.name} className={style.projectWrapper}>
             <Link to={`project/${proj.link}`} className={style.projectCard}>
-              <div>
+              <div style={{ width: '80%'}}>
                 <h5>{proj.name}</h5>
                 <p>{proj.desc}</p>
               </div>

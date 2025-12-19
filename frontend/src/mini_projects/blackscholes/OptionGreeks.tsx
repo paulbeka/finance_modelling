@@ -1,6 +1,7 @@
 import { OptionType } from '../util/common_types.types';
 import { blackScholesGreeks } from './calc/black_scholes';
 import styles from './CSS/OptionGreeks.module.css';
+import { isMobile } from 'react-device-detect';
 
 const OptionGreeks = (
   props: {
@@ -25,7 +26,7 @@ const OptionGreeks = (
   );
 
   return (
-    <div className={styles["option-greeks-container"]}>
+    <div className={isMobile ? styles["mobile-option-greeks-container"] : styles["option-greeks-container"]}>
       <div className={styles["option-greek-container"]}>Delta: {delta.toFixed(2)}</div>
       <div className={styles["option-greek-container"]}>Gamma: {gamma.toFixed(4)}</div>
       <div className={styles["option-greek-container"]}>Theta: {theta.toFixed(2)}</div>

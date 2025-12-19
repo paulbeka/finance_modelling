@@ -6,6 +6,7 @@ import VariableSlider from "../util/VariableSlider";
 import DropDownLatticeSelector from "../util/DropDownLatticeSelector";
 import calculateBinomial from "./calc/binomial";
 import { blackScholesSimulation } from "../blackscholes/calc/black_scholes";
+import { isMobile } from "react-device-detect";
 
 const BinomialModule = () => {
   const [steps, setSteps] = useState<number>(10);
@@ -105,7 +106,7 @@ const BinomialModule = () => {
         setValue={setVolatility}
       />
 
-      <div className={styles["option-price-container"]}>
+      <div className={isMobile ? styles["mobile-option-price-container"] : styles["option-price-container"]}>
         <div className={styles["option-price-item"]}>
           <p style={{ marginTop: "5px" }}>Binomial Price Estimation:</p> 
           <div className={styles["option-price-item-price"]}>
