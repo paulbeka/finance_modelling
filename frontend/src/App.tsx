@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ReactGA from 'react-ga4';
+import { useEffect } from "react";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReactGA from "react-ga4";
 
-import Home from './pages/Home';
-import About from './pages/About';
-import Project from './pages/Project';
-import BasePage from './pages/BasePage';
-import NotFoundPage from './pages/NotFoundPage';
-import { GA_TOKEN } from './Config';
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Project from "./pages/Project";
+import Games from "./pages/Games";
+import BasePage from "./pages/BasePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import { GA_TOKEN } from "./Config";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           
           <Route path="about" element={<About />} />
           <Route path="project/:projectId" element={<Project />} />
+          <Route path="games/:gameId" element={<Games />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

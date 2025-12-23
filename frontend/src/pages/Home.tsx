@@ -6,6 +6,7 @@ import FixedIncomeYieldSolver from "../mini_projects/fi_yield_solver/FixedIncome
 import style from "./CSS/home.module.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import largerProjects from "./data/projects.json";
+import games from "./data/games.json";
 import { isMobile } from "react-device-detect";
 
 const ExpandPanel = ({ isOpen, children }: any) => {
@@ -95,8 +96,8 @@ const Home = () => {
             </Link>
           </div>
         ))}
-
       </div>
+
     </div>
   );
 };

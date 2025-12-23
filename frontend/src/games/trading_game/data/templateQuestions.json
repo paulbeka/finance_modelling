@@ -1,0 +1,10 @@
+[
+  {
+    "type": "buy-long-short-forward",
+    "text": "You enter into a long forward contract on an asset with a current spot price of {x}. The forward price is ${x}, and the contract matures in {y} months. If the spot price at maturity is ${x}, what is your profit or loss from the forward contract?"
+  },
+  {
+    "type": "buy-long-short-forward",
+    "text": "You enter into a long forward contract on an asset with a current spot price of {x}. The forward price is ${x}, and the contract matures in {y} months. If the spot price at maturity is ${x}, what is your profit or loss from the forward contract?"
+  }
+]

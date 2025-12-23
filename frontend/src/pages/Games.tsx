@@ -1,17 +1,14 @@
 import React, { Suspense } from "react";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 import styles from "./CSS/projectSelector.module.css";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { ThreeDot } from "react-loading-indicators";
 
-const Project = () => {
-  const { projectId } = useParams<{ projectId: string }>();
+const Games = () => {
+  const { gameId } = useParams<{ gameId: string }>();
   
-  const components: { [key: string]: React.LazyExoticComponent<React.ComponentType<any>> } = {
-    "monte-carlo": React.lazy(() => import("../larger_projects/monte_carlo_option/MonteCarloOptions")),
-    "binomial": React.lazy(() => import("../larger_projects/binomial/BinomialEstimation")),
-    "portfolio-optimisation": React.lazy(() => import("../larger_projects/porfolio_optimisation/PortfolioOptimisation")),
-    "heston-model": React.lazy(() => import("../larger_projects/heston/HestonModel")),
+  const games: { [key: string]: React.LazyExoticComponent<React.ComponentType<any>> } = {
+    "trading-game": React.lazy(() => import("../games/trading_game/TradingGame"))
   };
 
   return (
@@ -34,14 +31,14 @@ const Project = () => {
           <ThreeDot color="rgb(131, 182, 212)" size="medium" text="" textColor="" />
         </div>
       }>
-        {projectId && components[projectId] ? (
-          React.createElement(components[projectId])
+        {gameId && games[gameId] ? (
+          React.createElement(games[gameId])
         ) : (
           <div>Project not found.</div>
         )}
       </Suspense>
     </div>
-  );
+  )
 }
 
-export default Project
+export default Games;
