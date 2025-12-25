@@ -4,9 +4,14 @@ import styles from "./CSS/TradingGame.module.css";
 import questionsData from "./data/templateQuestions.json";
 
 type TradingGameQuestion = {
-  questions: string;
+  question: string;
   potentialAnswers: string[];
   correctAnswer: string;
+}
+
+type QuestionTemplate = {
+  type: string;
+  text: string;
 }
 
 const TradingGame = () => {
@@ -14,12 +19,65 @@ const TradingGame = () => {
   const [score, setScore] = useState<number>(0);
   const [error, setError] = useState<string>("");
 
-  const generateNumbers = () => {
+  const randomInRange = (min: number, max: number, decimals = 2) =>
+  Number((Math.random() * (max - min) + min).toFixed(decimals));
 
+  const shuffleArray = (array: any[]): any[] => {
+    return [...array].sort(() => Math.random() - 0.5);
   }
 
-  const getNextRandomQuestion = () => {
+  function generateLongForwardQuestion(
+    template: QuestionTemplate
+  ): TradingGameQuestion {
+    const spotToday = randomInRange(50, 150);
+    const forwardPrice = randomInRange(50, 150);
+    const maturityMonths = Math.floor(randomInRange(3, 24, 0));
+    const riskFreeRate = randomInRange(1, 5);
+    const spotAtMaturity = randomInRange(40, 180);
 
+    const profit = Number((spotAtMaturity - forwardPrice).toFixed(2));
+
+    const question = template.text
+      .replace("{x}", spotToday.toString())
+      .replace("{y}", forwardPrice.toString())
+      .replace("{z}", maturityMonths.toString())
+      .replace("{x}", spotAtMaturity.toString())
+      .replace("{a}", riskFreeRate.toString());
+    
+    const wrong2 = Number((spotAtMaturity - spotToday).toFixed(2));
+    const wrong1 = Number((forwardPrice - spotAtMaturity).toFixed(2));
+    const wrong3 = Number(
+      (spotAtMaturity - forwardPrice * (1 + riskFreeRate / 100)).toFixed(2)
+    );
+
+    const answers = shuffleArray([
+      profit,
+      wrong1,
+      wrong2,
+      wrong3,
+    ]);
+
+    return {
+      question,
+      correctAnswer: profit.toString(),
+      potentialAnswers: answers
+    };
+  }
+
+
+  const getNextRandomQuestion = () => {
+    const nQuestion = questionsData.length;
+    const randomQuestion = Math.round(Math.random() * nQuestion);
+    const nextQuestion = questionsData[randomQuestion];
+
+    switch (nextQuestion.type) {
+      case "buy-long-short-forward": {
+        generateLongForwardQuestion(nextQuestion);
+      }
+      default: {
+      
+      }
+    }
   }
 
   const selectAnswer = (answer: string) => {
