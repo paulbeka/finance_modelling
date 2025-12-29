@@ -1,6 +1,6 @@
 [
   {
     "type": "buy-long-short-forward",
-    "text": "You enter into a long forward contract on an asset with a current spot price of {x}. The forward price is ${y}, and the contract matures in {z} months. If the spot price at maturity is ${x}, what is your profit or loss from the forward contract? Assume a risk free rate {a}%"
+    "text": "You enter into a long forward contract on an asset with a current spot price of ${x}. The forward price is ${y}, and the contract matures in {z} months. If the spot price at maturity is ${x}, what is your profit or loss from the forward contract? Assume a risk free rate {a}%"
   }
 ]

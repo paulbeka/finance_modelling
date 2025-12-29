@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./CSS/TradingGame.module.css";
+import Button from '@mui/material/Button';
 
 import questionsData from "./data/templateQuestions.json";
 
@@ -14,9 +15,13 @@ type QuestionTemplate = {
   text: string;
 }
 
+const N_QUESTIONS = 20;
+
 const TradingGame = () => {
   const [currentQuestion, setCurrentQuestion] = useState<TradingGameQuestion | null>(null);
   const [score, setScore] = useState<number>(0);
+  const [nQuestionsDone, setNQuestionsDone] = useState<number>(0);
+  const [gameOver, setGameOver] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const randomInRange = (min: number, max: number, decimals = 2) =>
@@ -66,13 +71,13 @@ const TradingGame = () => {
 
 
   const getNextRandomQuestion = () => {
-    const nQuestion = questionsData.length;
-    const randomQuestion = Math.round(Math.random() * nQuestion);
+    const nQuestions = questionsData.length;
+    const randomQuestion = Math.floor(Math.random() * nQuestions);
     const nextQuestion = questionsData[randomQuestion];
 
     switch (nextQuestion.type) {
       case "buy-long-short-forward": {
-        generateLongForwardQuestion(nextQuestion);
+        setCurrentQuestion(generateLongForwardQuestion(nextQuestion));
       }
       default: {
       
@@ -84,10 +89,23 @@ const TradingGame = () => {
     setError("");
     if (answer == currentQuestion?.correctAnswer) {
       setScore(score + 1);
-      getNextRandomQuestion();
     } else {
-      setError("Wrong answer. Please try again.")
+      setError("Wrong answer.")
     }
+    
+    if (nQuestionsDone + 1 === N_QUESTIONS) {
+      setGameOver(true);
+    } else {
+      getNextRandomQuestion();
+      setNQuestionsDone(nQuestionsDone + 1);
+    }
+  }
+
+  const runGame = () => {
+    setGameOver(false);
+    setNQuestionsDone(0);
+    setScore(0);
+    getNextRandomQuestion();
   }
 
   return (
@@ -98,23 +116,43 @@ const TradingGame = () => {
         and a set of actions. Your goal is to maximize profit. Good luck!
       </p>
 
-      <div>
-        Score: {score}
-      </div>
+      {!gameOver && <div>
+        Score: {score}/{N_QUESTIONS}
+      </div>}
+
+      {!currentQuestion && (
+        <div>
+          <Button variant="contained" onClick={runGame}>
+            Play Game
+          </Button>
+        </div>  
+      )}
+
+      {gameOver && (
+        <div>
+          <p>Game over! You scored: {score}/{N_QUESTIONS}</p>
+          <div>
+            <Button variant="contained" onClick={runGame}>
+              Play Again
+            </Button>
+          </div>  
+        </div>
+      )}
 
       <div>
-        {currentQuestion && (
+        {currentQuestion && !gameOver && (<>
+          <div><p>{currentQuestion.question}</p></div>
           <div className={styles["question-container"]}>
             {currentQuestion.potentialAnswers.map(option => (
               <div className={styles["question-option-container"]} onClick={() => selectAnswer(option)}>
-                {option}
+                ${option}
               </div>
             ))}
           </div>
-        )}
+        </>)}
       </div>
       
-      {error && <div>
+      {error && !gameOver && <div>
         {error}
       </div>}
     </div>

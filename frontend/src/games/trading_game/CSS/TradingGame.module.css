@@ -1,3 +1,20 @@
 .question-container {
-  
+  display: flex;
+  justify-content: space-evenly;
+  overflow: wrap;
+  gap: 8px;
+
+}
+
+.question-option-container {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: rgb(200, 220, 240);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  height: 50px;
 }
