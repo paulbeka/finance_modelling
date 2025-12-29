@@ -98,6 +98,21 @@ const Home = () => {
         ))}
       </div>
 
+      <h2>Games</h2>
+      <div className={style.projectList}>
+        {games.map((game) => (
+          <div key={game.name} className={style.projectWrapper}>
+            <Link to={`games/${game.link}`} className={style.projectCard}>
+              <div style={{ width: '80%'}}>
+                <h5>{game.name}</h5>
+                <p>{game.desc}</p>
+              </div>
+              <BsArrowRightShort className={style.rightArrow} size={40} />
+            </Link>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };

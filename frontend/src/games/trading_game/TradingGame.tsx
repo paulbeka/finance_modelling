@@ -119,7 +119,7 @@ const TradingGame = () => {
       {!gameOver && <div>
         Score: {score}/{N_QUESTIONS}
       </div>}
-
+      <br />
       {!currentQuestion && (
         <div>
           <Button variant="contained" onClick={runGame}>

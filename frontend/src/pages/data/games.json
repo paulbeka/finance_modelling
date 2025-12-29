@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "name": "Forward Trading Game", 
+    "desc": "What's your profit in a given scenario?", 
+    "link": "/trading-game" 
+  }
+]
