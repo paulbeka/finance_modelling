@@ -69,6 +69,33 @@ const TradingGame = () => {
     };
   }
 
+  function generateShortForwardQuestion(
+    template: QuestionTemplate
+  ): TradingGameQuestion {
+    const s0 = randomInRange(50, 150);
+    const f = randomInRange(50, 150);
+    const st = randomInRange(40, 180);
+
+    const profit = Number((f - st).toFixed(2));
+
+    const question = template.text
+      .replace("{s0}", s0.toString())
+      .replace("{f}", f.toString())
+      .replace("{st}", st.toString());
+
+    const answers = shuffleArray([
+      profit,
+      -profit,
+      Number((st - s0).toFixed(2)),
+      0
+    ]);
+
+    return {
+      question,
+      correctAnswer: profit.toString(),
+      potentialAnswers: answers.map(String)
+    };
+  }
 
   const getNextRandomQuestion = () => {
     const nQuestions = questionsData.length;
@@ -76,12 +103,14 @@ const TradingGame = () => {
     const nextQuestion = questionsData[randomQuestion];
 
     switch (nextQuestion.type) {
-      case "buy-long-short-forward": {
+      case "buy-long-forward":
         setCurrentQuestion(generateLongForwardQuestion(nextQuestion));
-      }
-      default: {
-      
-      }
+        break;
+      case "sell-short-forward":
+        setCurrentQuestion(generateShortForwardQuestion(nextQuestion));
+        break;
+      default:
+        console.error("Unknown type.")
     }
   }
 
