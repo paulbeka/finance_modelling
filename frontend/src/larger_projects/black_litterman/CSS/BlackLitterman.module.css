@@ -1,0 +1,7 @@
+.black-litterman-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  gap: 20px;
+  margin: 0 auto;
+}

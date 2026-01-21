@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AssetSelector from "./AssetSelector";
+import AssetSelector from "../../components/util/AssetSelector";
 import { Button, Slider, Box, Typography, Chip } from "@mui/material";
 import styles from "./CSS/PortfolioOptimisation.module.css";
 import { Mosaic } from "react-loading-indicators";

@@ -12,6 +12,7 @@ const Project = () => {
     "binomial": React.lazy(() => import("../larger_projects/binomial/BinomialEstimation")),
     "portfolio-optimisation": React.lazy(() => import("../larger_projects/porfolio_optimisation/PortfolioOptimisation")),
     "heston-model": React.lazy(() => import("../larger_projects/heston/HestonModel")),
+    "black-litterman": React.lazy(() => import("../larger_projects/black_litterman/BlackLitterman")),
   };
 
   return (
