@@ -3,6 +3,9 @@ import AssetSelector from "../../components/util/AssetSelector";
 import { Button, Slider, Box, Typography, FormControlLabel, Switch } from "@mui/material";
 import styles from "./CSS/BlackLitterman.module.css";
 import VariableSlider from "../../mini_projects/util/VariableSlider";
+import { FaPlus } from "react-icons/fa";
+import { AbsoluteView, RelativeView } from "./View.types";
+import View from "./View";
 
 const BlackLitterman = () => {
   const [assets, setAssets] = useState<string[] | undefined>([]);
@@ -12,6 +15,19 @@ const BlackLitterman = () => {
   const [riskAversion, setRiskAversion] = useState<number>(2);
   const [tau, setTau] = useState<number>(0.05);
   const [allowShortSelling, setAllowShortSelling] = useState<boolean>(false);
+
+  const [viewList, setviewList] = useState<(AbsoluteView | RelativeView)[]>([]);
+
+  const addNewView = () => {
+    setviewList(prev => ([
+      ...prev, {
+        type: "absolute",
+        asset: assets && assets.length > 0 ? assets[0] : "",
+        expectedReturn: 0,
+        cofidence: 50
+      }
+    ]))
+  }
 
   useEffect(() => {
     if (!assets) return;
@@ -124,6 +140,21 @@ const BlackLitterman = () => {
 
       <FormControlLabel control={<Switch onChange={() => setAllowShortSelling(!allowShortSelling)} defaultChecked={allowShortSelling} />} label="Allow Short Selling" />
       
+      <h3>Investor Views</h3>
+
+      {viewList.map((view, key) => <View key={key} view={view} />)}
+
+      <Button
+        variant="outlined"
+        size="small"
+        sx={{ mt: 3, mb: 3, display: "flex", gap: 1 }}
+        onClick={addNewView}
+      >
+        <FaPlus />
+        Add View
+      </Button>
+
+      <h3>Optimisation Constraints</h3>
 
       <Button variant="contained" sx={{ mt: 3 }}>
         Run Black-Litterman
