@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import AssetSelector from "../../components/util/AssetSelector";
-import { Button, Slider, Box, Typography } from "@mui/material";
+import { Button, Slider, Box, Typography, FormControlLabel, Switch } from "@mui/material";
 import styles from "./CSS/BlackLitterman.module.css";
+import VariableSlider from "../../mini_projects/util/VariableSlider";
 
 const BlackLitterman = () => {
   const [assets, setAssets] = useState<string[] | undefined>([]);
   const [timeframe, setTimeframe] = useState<number>(1);
   const [portfolioAllocation, setPortfolioAllocation] = useState<{ [key: string]: number }>({});
+
+  const [riskAversion, setRiskAversion] = useState<number>(2);
+  const [tau, setTau] = useState<number>(0.05);
+  const [allowShortSelling, setAllowShortSelling] = useState<boolean>(false);
 
   useEffect(() => {
     if (!assets) return;
@@ -93,6 +98,32 @@ const BlackLitterman = () => {
           max={10}
         />
       </Box>
+
+      <p>For information: the covariance will be based on the stock history.</p>
+
+      <h3>Risk Parameters</h3>
+
+      <VariableSlider 
+        label="Risk Aversion"
+        value={riskAversion}
+        setValue={setRiskAversion}
+        onChange={setRiskAversion}
+        min={1}
+        max={5}
+      />
+
+      <VariableSlider
+        label="Tau"
+        value={tau}
+        setValue={setTau}
+        onChange={setTau}
+        min={0.01}
+        max={0.2}
+        step={0.01}
+      />
+
+      <FormControlLabel control={<Switch onChange={() => setAllowShortSelling(!allowShortSelling)} defaultChecked={allowShortSelling} />} label="Allow Short Selling" />
+      
 
       <Button variant="contained" sx={{ mt: 3 }}>
         Run Black-Litterman
