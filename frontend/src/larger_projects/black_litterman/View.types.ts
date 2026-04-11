@@ -2,7 +2,7 @@ export type AbsoluteView = {
   type: "absolute";
   asset: string;
   expectedReturn: number;
-  cofidence: number;
+  confidence: number;
 }
 
 export type RelativeView = {

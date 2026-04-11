@@ -24,7 +24,7 @@ const BlackLitterman = () => {
         type: "absolute",
         asset: assets && assets.length > 0 ? assets[0] : "",
         expectedReturn: 0,
-        cofidence: 50
+        confidence: 50
       }
     ]))
   }
@@ -142,7 +142,9 @@ const BlackLitterman = () => {
       
       <h3>Investor Views</h3>
 
-      {viewList.map((view, key) => <View key={key} view={view} />)}
+      {viewList.map((view, key) => <View key={key} view={view} onChange={(newValue) => 
+        setviewList(prev => prev.map((value, index) => (index === key ? newValue : value)))
+      } />)}
 
       <Button
         variant="outlined"
